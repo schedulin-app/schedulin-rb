@@ -1,0 +1,9 @@
+{
+  "cliVersion": "5.35.4",
+  "generatorName": "fernapi/fern-ruby-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "clientClassName": "Schedulin"
+  },
+  "originGitCommit": "802c7263c5bf1ad6ba870d6b4842a7dd617115f5"
+}
