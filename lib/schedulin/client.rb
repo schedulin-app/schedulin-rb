@@ -4,15 +4,17 @@ module Schedulin
   class Client
     # @param api_key [String]
     # @param base_url [String, nil]
+    # @param max_retries [Integer]
     #
     # @return [void]
-    def initialize(api_key:, base_url: nil)
+    def initialize(api_key:, base_url: nil, max_retries: 2)
       @raw_client = Schedulin::Internal::Http::RawClient.new(
         base_url: base_url || Schedulin::Environment::DEFAULT,
         headers: {
           "X-Fern-Language" => "Ruby",
           "x-api-key" => api_key.to_s
-        }
+        },
+        max_retries: max_retries
       )
     end
 

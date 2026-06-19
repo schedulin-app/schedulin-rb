@@ -42,14 +42,6 @@ client.posts.list
 <dl>
 <dd>
 
-**cursor:** `Schedulin::Posts::Types::ListPostsRequestCursor` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **page:** `Integer` 
     
 </dd>
@@ -59,6 +51,14 @@ client.posts.list
 <dd>
 
 **status:** `Schedulin::Posts::Types::ListPostsRequestStatus` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**approval_status:** `Schedulin::Posts::Types::ListPostsRequestApprovalStatus` 
     
 </dd>
 </dl>
@@ -147,10 +147,7 @@ Create a new post with media, tags, and scheduling options
 ```ruby
 client.posts.create(
   caption: "caption",
-  social_account_id: "socialAccountId",
-  media: [{
-    url: "url"
-  }]
+  social_account_id: "socialAccountId"
 )
 ```
 </dd>
@@ -231,6 +228,68 @@ client.posts.create(
 <dd>
 
 **parts:** `Internal::Types::Array[Schedulin::Posts::Types::PostCreatePartsItem]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Posts::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">v0post_count_by_tab</a>() -> Object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns counts of posts for the Queue, Drafts, Approvals, and Sent tabs
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.posts.v0post_count_by_tab
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**social_account_ids:** `String` 
     
 </dd>
 </dl>
@@ -546,7 +605,7 @@ client.posts.analytics_summary(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">analytics_series</a>(id) -> Internal::Types::Array[Schedulin::Posts::Types::AnalyticsSeriesPostsResponseItem]</code></summary>
+<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">analytics_series</a>(id) -> Schedulin::Posts::Types::AnalyticsSeriesPostsResponse</code></summary>
 <dl>
 <dd>
 
@@ -822,7 +881,7 @@ client.posts.get_job_status(id: "id")
 </details>
 
 ## SocialAccounts
-<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">list</a>() -> Internal::Types::Array[Schedulin::SocialAccounts::Types::ListSocialAccountsResponseItem]</code></summary>
+<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">list</a>() -> Schedulin::SocialAccounts::Types::ListSocialAccountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -919,86 +978,6 @@ client.social_accounts.update(id: "id")
 <dd>
 
 **id:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**platform:** `Schedulin::SocialAccounts::Types::UpdateSocialAccountsRequestPlatform` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**access_token:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**secret_access_token:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**refresh_token:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**refresh_token_valid:** `Internal::Types::Boolean` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**token_expires_at:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**image_url:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**image_processing_status:** `Schedulin::SocialAccounts::Types::UpdateSocialAccountsRequestImageProcessingStatus` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**platform_data:** `Internal::Types::Hash[String, Object]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_refresh_at:** `String` 
     
 </dd>
 </dl>
@@ -1161,7 +1140,7 @@ client.social_accounts.update_timezone(
 </dl>
 </details>
 
-<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">refresh_profile</a>(id, request) -> Schedulin::SocialAccounts::Types::RefreshProfileSocialAccountsResponse</code></summary>
+<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">pinterest_boards</a>(id) -> Schedulin::SocialAccounts::Types::PinterestBoardsSocialAccountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1173,7 +1152,7 @@ client.social_accounts.update_timezone(
 <dl>
 <dd>
 
-Fetch the latest profile information from the connected platform and update the social account
+List the boards for a connected Pinterest account. Use a board id in `platformConfiguration.board_ids` when creating a Pinterest post.
 </dd>
 </dl>
 </dd>
@@ -1188,7 +1167,69 @@ Fetch the latest profile information from the connected platform and update the 
 <dd>
 
 ```ruby
-client.social_accounts.refresh_profile(id: "id")
+client.social_accounts.pinterest_boards(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::SocialAccounts::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">tiktok_creator_info</a>(id) -> Schedulin::SocialAccounts::Types::TiktokCreatorInfoSocialAccountsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Fetch the privacy-level options, duration limits, and interaction settings for a connected TikTok account — required to build a valid `platformConfiguration` when creating a TikTok post.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.social_accounts.tiktok_creator_info(id: "id")
 ```
 </dd>
 </dl>
@@ -1224,7 +1265,7 @@ client.social_accounts.refresh_profile(id: "id")
 </details>
 
 ## Tags
-<details><summary><code>client.tags.<a href="/lib/schedulin/tags/client.rb">list</a>() -> Internal::Types::Array[Schedulin::Types::Tag]</code></summary>
+<details><summary><code>client.tags.<a href="/lib/schedulin/tags/client.rb">list</a>() -> Schedulin::Tags::Types::ListTagsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1862,7 +1903,7 @@ client.media.set_tags(
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">count_by_tag</a>() -> Object</code></summary>
+<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">count_by_tag</a>() -> Schedulin::Media::Types::CountByTagMediaResponse</code></summary>
 <dl>
 <dd>
 
@@ -1928,7 +1969,7 @@ client.media.count_by_tag
 <dl>
 <dd>
 
-Generate AWS S3 presigned post for secure file uploads
+Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post.
 </dd>
 </dl>
 </dd>
@@ -1978,6 +2019,14 @@ client.media.create_presigned_post(
 <dd>
 
 **size:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**intent:** `Schedulin::Media::Types::CreatePresignedPostIntent` 
     
 </dd>
 </dl>

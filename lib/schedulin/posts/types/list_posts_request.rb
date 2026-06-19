@@ -4,11 +4,11 @@ module Schedulin
   module Posts
     module Types
       class ListPostsRequest < Internal::Types::Model
-        field :cursor, -> { Schedulin::Posts::Types::ListPostsRequestCursor }, optional: true, nullable: false
-
         field :page, -> { Integer }, optional: true, nullable: false
 
         field :status, -> { Schedulin::Posts::Types::ListPostsRequestStatus }, optional: true, nullable: false
+
+        field :approval_status, -> { Schedulin::Posts::Types::ListPostsRequestApprovalStatus }, optional: true, nullable: false, api_name: "approvalStatus"
 
         field :scheduled_at, -> { Schedulin::Types::ListPostsRequestScheduledAt }, optional: true, nullable: false, api_name: "scheduledAt"
 

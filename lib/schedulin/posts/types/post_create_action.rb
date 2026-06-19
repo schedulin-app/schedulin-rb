@@ -9,6 +9,7 @@ module Schedulin
         SCHEDULE = "schedule"
         QUEUE = "queue"
         DRAFT = "draft"
+        NOW = "now"
       end
     end
   end

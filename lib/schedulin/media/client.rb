@@ -174,7 +174,7 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Object]
+      # @return [Schedulin::Media::Types::CountByTagMediaResponse]
       def count_by_tag(request_options: {}, **_params)
         request = Schedulin::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -188,13 +188,16 @@ module Schedulin
           raise Schedulin::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          Schedulin::Media::Types::CountByTagMediaResponse.load(response.body)
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
-      # Generate AWS S3 presigned post for secure file uploads
+      # Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type`
+      # header matching `contentType`, then reference the returned `key` when creating a post.
       #
       # @param request_options [Hash]
       # @param params [Schedulin::Media::Types::CreatePresignedPost]

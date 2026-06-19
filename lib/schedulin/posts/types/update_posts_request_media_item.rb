@@ -12,7 +12,7 @@ module Schedulin
 
         field :mime_type, -> { String }, optional: false, nullable: false, api_name: "mimeType"
 
-        field :bucket, -> { String }, optional: false, nullable: false
+        field :bucket, -> { String }, optional: true, nullable: false
 
         field :key, -> { String }, optional: false, nullable: false
       end

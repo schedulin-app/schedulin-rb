@@ -5,8 +5,6 @@ module Schedulin
     class Tag < Internal::Types::Model
       field :id, -> { String }, optional: false, nullable: false
 
-      field :user_id, -> { String }, optional: false, nullable: false, api_name: "userId"
-
       field :name, -> { String }, optional: false, nullable: false
 
       field :color, -> { String }, optional: false, nullable: false

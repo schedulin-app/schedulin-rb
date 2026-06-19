@@ -32,10 +32,7 @@ client = Schedulin::Client.new(api_key: "<value>")
 
 client.posts.create(
   caption: "caption",
-  social_account_id: "socialAccountId",
-  media: [{
-    url: "url"
-  }]
+  social_account_id: "socialAccountId"
 )
 ```
 

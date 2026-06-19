@@ -21,8 +21,6 @@ module Schedulin
 
       field :updated_at, -> { String }, optional: false, nullable: false, api_name: "updatedAt"
 
-      field :user_id, -> { String }, optional: false, nullable: false, api_name: "userId"
-
       field :bucket, -> { String }, optional: false, nullable: false
 
       field :key, -> { String }, optional: false, nullable: false

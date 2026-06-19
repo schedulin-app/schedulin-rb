@@ -7,9 +7,11 @@ module Schedulin
 
       BLUESKY = "bluesky"
       FACEBOOK = "facebook"
+      GOOGLE_BUSINESS_PROFILE = "google_business_profile"
       INSTAGRAM = "instagram"
       LINKEDIN = "linkedin"
       PINTEREST = "pinterest"
+      REDDIT = "reddit"
       THREADS = "threads"
       TIKTOK = "tiktok"
       TWITTER = "twitter"

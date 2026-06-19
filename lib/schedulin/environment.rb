@@ -2,6 +2,6 @@
 
 module Schedulin
   class Environment
-    DEFAULT = ""
+    DEFAULT = "https://api.schedulin.app"
   end
 end

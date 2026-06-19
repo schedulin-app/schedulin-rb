@@ -25,7 +25,7 @@ module Schedulin
 
       field :scheduled_at, -> { String }, optional: false, nullable: true, api_name: "scheduledAt"
 
-      field :platform_configuration, -> { Schedulin::Types::PostWithRelationsPlatformConfiguration }, optional: true, nullable: false, api_name: "platformConfiguration"
+      field :platform_configuration, -> { Internal::Types::Hash[String, Object] }, optional: false, nullable: true, api_name: "platformConfiguration"
 
       field :social_account_id, -> { String }, optional: false, nullable: false, api_name: "socialAccountId"
 
@@ -35,7 +35,7 @@ module Schedulin
 
       field :updated_at, -> { String }, optional: false, nullable: false, api_name: "updatedAt"
 
-      field :social_account, -> { Schedulin::Types::PostWithRelationsSocialAccount }, optional: false, nullable: false, api_name: "socialAccount"
+      field :social_account, -> { Schedulin::Types::SocialAccount }, optional: false, nullable: false, api_name: "socialAccount"
 
       field :media, -> { Internal::Types::Array[Schedulin::Types::PostWithRelationsMediaItem] }, optional: false, nullable: false
 

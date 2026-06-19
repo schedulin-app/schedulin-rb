@@ -10,7 +10,7 @@ module Schedulin
 
         field :social_account_id, -> { String }, optional: false, nullable: false, api_name: "socialAccountId"
 
-        field :media, -> { Internal::Types::Array[Schedulin::Posts::Types::PostCreateMediaItem] }, optional: false, nullable: false
+        field :media, -> { Internal::Types::Array[Schedulin::Posts::Types::PostCreateMediaItem] }, optional: true, nullable: false
 
         field :thumbnail, -> { Schedulin::Posts::Types::PostCreateThumbnail }, optional: true, nullable: false
 

@@ -9,6 +9,8 @@ module Schedulin
         field :key, -> { String }, optional: false, nullable: false
 
         field :size, -> { Integer }, optional: true, nullable: false
+
+        field :intent, -> { Schedulin::Media::Types::CreatePresignedPostIntent }, optional: true, nullable: false
       end
     end
   end

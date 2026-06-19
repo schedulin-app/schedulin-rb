@@ -20,7 +20,7 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Array[Schedulin::SocialAccounts::Types::ListSocialAccountsResponseItem]]
+      # @return [Schedulin::SocialAccounts::Types::ListSocialAccountsResponse]
       def list(request_options: {}, **_params)
         request = Schedulin::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -34,10 +34,12 @@ module Schedulin
           raise Schedulin::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          Schedulin::SocialAccounts::Types::ListSocialAccountsResponse.load(response.body)
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # Update social media account settings and information
@@ -157,10 +159,11 @@ module Schedulin
         end
       end
 
-      # Fetch the latest profile information from the connected platform and update the social account
+      # List the boards for a connected Pinterest account. Use a board id in `platformConfiguration.board_ids` when
+      # creating a Pinterest post.
       #
       # @param request_options [Hash]
-      # @param params [Schedulin::SocialAccounts::Types::RefreshProfileSocialAccountsRequest]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -168,18 +171,13 @@ module Schedulin
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
       #
-      # @return [Schedulin::SocialAccounts::Types::RefreshProfileSocialAccountsResponse]
-      def refresh_profile(request_options: {}, **params)
+      # @return [Schedulin::SocialAccounts::Types::PinterestBoardsSocialAccountsResponse]
+      def pinterest_boards(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
-        request_data = Schedulin::SocialAccounts::Types::RefreshProfileSocialAccountsRequest.new(params).to_h
-        non_body_param_names = %w[id]
-        body = request_data.except(*non_body_param_names)
-
         request = Schedulin::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
-          method: "PUT",
-          path: "v0/social-accounts/#{URI.encode_uri_component(params[:id].to_s)}/refresh",
-          body: body,
+          method: "GET",
+          path: "v0/social-accounts/#{URI.encode_uri_component(params[:id].to_s)}/pinterest-boards",
           request_options: request_options
         )
         begin
@@ -189,7 +187,42 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::SocialAccounts::Types::RefreshProfileSocialAccountsResponse.load(response.body)
+          Schedulin::SocialAccounts::Types::PinterestBoardsSocialAccountsResponse.load(response.body)
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # Fetch the privacy-level options, duration limits, and interaction settings for a connected TikTok account —
+      # required to build a valid `platformConfiguration` when creating a TikTok post.
+      #
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
+      #
+      # @return [Schedulin::SocialAccounts::Types::TiktokCreatorInfoSocialAccountsResponse]
+      def tiktok_creator_info(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "GET",
+          path: "v0/social-accounts/#{URI.encode_uri_component(params[:id].to_s)}/tiktok-creator-info",
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          Schedulin::SocialAccounts::Types::TiktokCreatorInfoSocialAccountsResponse.load(response.body)
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

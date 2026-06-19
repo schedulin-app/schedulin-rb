@@ -25,7 +25,7 @@ module Schedulin
 
       field :scheduled_at, -> { String }, optional: false, nullable: true, api_name: "scheduledAt"
 
-      field :platform_configuration, -> { Schedulin::Types::PostPlatformConfiguration }, optional: true, nullable: false, api_name: "platformConfiguration"
+      field :platform_configuration, -> { Internal::Types::Hash[String, Object] }, optional: false, nullable: true, api_name: "platformConfiguration"
 
       field :social_account_id, -> { String }, optional: false, nullable: false, api_name: "socialAccountId"
 

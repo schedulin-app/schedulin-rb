@@ -22,7 +22,7 @@ module Schedulin
       # @option params [String, nil] :q
       # @option params [Integer, nil] :limit
       #
-      # @return [Array[Schedulin::Types::Tag]]
+      # @return [Schedulin::Tags::Types::ListTagsResponse]
       def list(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
@@ -42,10 +42,12 @@ module Schedulin
           raise Schedulin::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          Schedulin::Tags::Types::ListTagsResponse.load(response.body)
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # Create a new tag. Users can have up to 5 tags.

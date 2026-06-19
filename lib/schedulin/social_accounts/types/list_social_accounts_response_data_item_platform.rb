@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Schedulin
-  module Posts
+  module SocialAccounts
     module Types
-      module PostCreatePartsItemMediaItemTagsItemPlatform
+      module ListSocialAccountsResponseDataItemPlatform
         extend Schedulin::Internal::Types::Enum
 
         BLUESKY = "bluesky"

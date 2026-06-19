@@ -9,13 +9,13 @@ module Schedulin
 
       field :username, -> { String }, optional: false, nullable: true
 
-      field :user_id, -> { String }, optional: false, nullable: false
+      field :user_id, -> { String }, optional: false, nullable: false, api_name: "userId"
 
-      field :profile_photo_url, -> { String }, optional: false, nullable: true
+      field :profile_photo_url, -> { String }, optional: false, nullable: true, api_name: "profilePhotoUrl"
 
       field :status, -> { Schedulin::Types::SocialAccountPublicStatus }, optional: false, nullable: false
 
-      field :external_id, -> { String }, optional: false, nullable: true
+      field :external_id, -> { String }, optional: false, nullable: true, api_name: "externalId"
     end
   end
 end
