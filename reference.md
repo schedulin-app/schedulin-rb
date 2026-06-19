@@ -247,7 +247,7 @@ client.posts.create(
 </dl>
 </details>
 
-<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">v0post_count_by_tab</a>() -> Object</code></summary>
+<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">count_by_tab</a>() -> Object</code></summary>
 <dl>
 <dd>
 
@@ -274,7 +274,7 @@ Returns counts of posts for the Queue, Drafts, Approvals, and Sent tabs
 <dd>
 
 ```ruby
-client.posts.v0post_count_by_tab
+client.posts.count_by_tab
 ```
 </dd>
 </dl>
@@ -1435,11 +1435,7 @@ Update an existing tag by its ID. Only the tag owner can update their tags.
 <dd>
 
 ```ruby
-client.tags.update(
-  id: "id",
-  name: "name",
-  color: "color"
-)
+client.tags.update(id: "id")
 ```
 </dd>
 </dl>

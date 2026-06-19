@@ -108,7 +108,7 @@ module Schedulin
       # @option params [String, nil] :social_account_ids
       #
       # @return [Object]
-      def v0post_count_by_tab(request_options: {}, **params)
+      def count_by_tab(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["socialAccountIds"] = params[:social_account_ids] if params.key?(:social_account_ids)
