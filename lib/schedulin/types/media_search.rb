@@ -3,7 +3,7 @@
 module Schedulin
   module Types
     class MediaSearch < Internal::Types::Model
-      field :cursor, -> { Schedulin::Types::MediaSearchCursor }, optional: true, nullable: false
+      field :page, -> { Integer }, optional: true, nullable: false
 
       field :limit, -> { Integer }, optional: true, nullable: false
 

@@ -4,7 +4,7 @@ module Schedulin
   module Media
     module Types
       class ListMediaRequest < Internal::Types::Model
-        field :cursor, -> { Schedulin::Media::Types::ListMediaRequestCursor }, optional: true, nullable: false
+        field :page, -> { Integer }, optional: true, nullable: false
 
         field :limit, -> { Integer }, optional: true, nullable: false
 

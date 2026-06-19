@@ -81,7 +81,7 @@ module Schedulin
         end
       end
 
-      # List media for the organization with cursor pagination, search, type and tag filters
+      # List media for the organization with page pagination, search, type and tag filters
       #
       # @param request_options [Hash]
       # @param params [Hash]
@@ -90,18 +90,18 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Schedulin::Media::Types::ListMediaRequestCursor, nil] :cursor
+      # @option params [Integer, nil] :page
       # @option params [Integer, nil] :limit
       # @option params [String, nil] :q
       # @option params [Schedulin::Media::Types::ListMediaRequestType, nil] :type
       # @option params [String, nil] :tag_ids
       # @option params [Schedulin::Media::Types::ListMediaRequestTagMode, nil] :tag_mode
       #
-      # @return [Object]
+      # @return [Schedulin::Media::Types::ListMediaResponse]
       def list(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
-        query_params["cursor"] = params[:cursor] if params.key?(:cursor)
+        query_params["page"] = params[:page] if params.key?(:page)
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["q"] = params[:q] if params.key?(:q)
         query_params["type"] = params[:type] if params.key?(:type)
@@ -121,10 +121,12 @@ module Schedulin
           raise Schedulin::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          Schedulin::Media::Types::ListMediaResponse.load(response.body)
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # Replace the set of tags attached to a media item with the provided tag IDs

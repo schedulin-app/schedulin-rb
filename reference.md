@@ -1724,7 +1724,7 @@ client.media.update(
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">list</a>() -> Object</code></summary>
+<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">list</a>() -> Schedulin::Media::Types::ListMediaResponse</code></summary>
 <dl>
 <dd>
 
@@ -1736,7 +1736,7 @@ client.media.update(
 <dl>
 <dd>
 
-List media for the organization with cursor pagination, search, type and tag filters
+List media for the organization with page pagination, search, type and tag filters
 </dd>
 </dl>
 </dd>
@@ -1766,7 +1766,7 @@ client.media.list
 <dl>
 <dd>
 
-**cursor:** `Schedulin::Media::Types::ListMediaRequestCursor` 
+**page:** `Integer` 
     
 </dd>
 </dl>
