@@ -8,6 +8,8 @@ module Schedulin
 
         field :status, -> { Schedulin::Posts::Types::ListPostsRequestStatus }, optional: true, nullable: false
 
+        field :statuses, -> { Schedulin::Posts::Types::ListPostsRequestStatusesItem }, optional: true, nullable: false
+
         field :approval_status, -> { Schedulin::Posts::Types::ListPostsRequestApprovalStatus }, optional: true, nullable: false, api_name: "approvalStatus"
 
         field :scheduled_at, -> { Schedulin::Types::ListPostsRequestScheduledAt }, optional: true, nullable: false, api_name: "scheduledAt"

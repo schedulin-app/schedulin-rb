@@ -7,6 +7,8 @@ module Schedulin
 
       field :status, -> { Schedulin::Types::PostSearchStatus }, optional: true, nullable: false
 
+      field :statuses, -> { Internal::Types::Array[Schedulin::Types::PostSearchStatusesItem] }, optional: true, nullable: false
+
       field :approval_status, -> { Schedulin::Types::PostSearchApprovalStatus }, optional: true, nullable: false, api_name: "approvalStatus"
 
       field :scheduled_at, -> { Schedulin::Types::PostSearchScheduledAt }, optional: true, nullable: false, api_name: "scheduledAt"

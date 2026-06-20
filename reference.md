@@ -58,6 +58,14 @@ client.posts.list
 <dl>
 <dd>
 
+**statuses:** `Schedulin::Posts::Types::ListPostsRequestStatusesItem` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **approval_status:** `Schedulin::Posts::Types::ListPostsRequestApprovalStatus` 
     
 </dd>

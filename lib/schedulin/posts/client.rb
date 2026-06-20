@@ -21,6 +21,7 @@ module Schedulin
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer, nil] :page
       # @option params [Schedulin::Posts::Types::ListPostsRequestStatus, nil] :status
+      # @option params [Schedulin::Posts::Types::ListPostsRequestStatusesItem, nil] :statuses
       # @option params [Schedulin::Posts::Types::ListPostsRequestApprovalStatus, nil] :approval_status
       # @option params [Schedulin::Types::ListPostsRequestScheduledAt, nil] :scheduled_at
       # @option params [String, nil] :tag_ids
@@ -34,6 +35,7 @@ module Schedulin
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["status"] = params[:status] if params.key?(:status)
+        query_params["statuses"] = params[:statuses] if params.key?(:statuses)
         query_params["approvalStatus"] = params[:approval_status] if params.key?(:approval_status)
         query_params["scheduledAt"] = params[:scheduled_at] if params.key?(:scheduled_at)
         query_params["tagIds"] = params[:tag_ids] if params.key?(:tag_ids)
