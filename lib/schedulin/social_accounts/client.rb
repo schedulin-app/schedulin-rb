@@ -159,6 +159,49 @@ module Schedulin
         end
       end
 
+      # Return the next available queue slot times (UTC) for a social account, computed from its queue schedule,
+      # per-slot capacity, and timezone. Empty when the account has no queue times configured. Use a slot as
+      # `scheduledAt`, or pass `action: "queue"` when creating a post to take the next slot automatically.
+      #
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
+      # @option params [Integer, nil] :limit
+      # @option params [String, nil] :after
+      #
+      # @return [Schedulin::SocialAccounts::Types::NextSlotsSocialAccountsResponse]
+      def next_slots(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        query_params = {}
+        query_params["limit"] = params[:limit] if params.key?(:limit)
+        query_params["after"] = params[:after] if params.key?(:after)
+
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "GET",
+          path: "v0/social-accounts/#{URI.encode_uri_component(params[:id].to_s)}/next-slots",
+          query: query_params,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          Schedulin::SocialAccounts::Types::NextSlotsSocialAccountsResponse.load(response.body)
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
       # List the boards for a connected Pinterest account. Use a board id in `platformConfiguration.board_ids` when
       # creating a Pinterest post.
       #

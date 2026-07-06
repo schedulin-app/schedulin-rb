@@ -1148,6 +1148,84 @@ client.social_accounts.update_timezone(
 </dl>
 </details>
 
+<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">next_slots</a>(id) -> Schedulin::SocialAccounts::Types::NextSlotsSocialAccountsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Return the next available queue slot times (UTC) for a social account, computed from its queue schedule, per-slot capacity, and timezone. Empty when the account has no queue times configured. Use a slot as `scheduledAt`, or pass `action: "queue"` when creating a post to take the next slot automatically.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.social_accounts.next_slots(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**after:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::SocialAccounts::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">pinterest_boards</a>(id) -> Schedulin::SocialAccounts::Types::PinterestBoardsSocialAccountsResponse</code></summary>
 <dl>
 <dd>
@@ -2039,6 +2117,61 @@ client.media.create_presigned_post(
 <dd>
 
 **request_options:** `Schedulin::Media::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Platforms
+<details><summary><code>client.platforms.<a href="/lib/schedulin/platforms/client.rb">list</a>() -> Schedulin::Platforms::Types::ListPlatformsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Per-platform posting requirements: caption length limits, media count/type rules, whether `platformConfiguration` is required, its JSON Schema when server-validated, and helper endpoints for fetching dynamic values (e.g. Pinterest boards). Platforms marked `comingSoon` cannot be posted to yet.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.platforms.list
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Platforms::RequestOptions` 
     
 </dd>
 </dl>

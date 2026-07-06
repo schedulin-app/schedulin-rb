@@ -37,5 +37,10 @@ module Schedulin
     def media
       @media ||= Schedulin::Media::Client.new(client: @raw_client)
     end
+
+    # @return [Schedulin::Platforms::Client]
+    def platforms
+      @platforms ||= Schedulin::Platforms::Client.new(client: @raw_client)
+    end
   end
 end
