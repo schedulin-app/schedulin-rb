@@ -317,7 +317,7 @@ client.posts.count_by_tab
 </dl>
 </details>
 
-<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">retrieve</a>(id) -> Schedulin::Types::PostWithRelations</code></summary>
+<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">retrieve</a>(id:) -> Schedulin::Types::PostWithRelations</code></summary>
 <dl>
 <dd>
 
@@ -379,7 +379,7 @@ client.posts.retrieve(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">update</a>(id, request) -> Schedulin::Types::Post</code></summary>
+<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">update</a>(id:, request) -> Schedulin::Types::Post</code></summary>
 <dl>
 <dd>
 
@@ -489,7 +489,7 @@ client.posts.update(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">delete</a>(id, request) -> Schedulin::Types::Post</code></summary>
+<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">delete</a>(id:, request) -> Schedulin::Types::Post</code></summary>
 <dl>
 <dd>
 
@@ -551,7 +551,7 @@ client.posts.delete(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">analytics_summary</a>(id) -> Schedulin::Posts::Types::AnalyticsSummaryPostsResponse</code></summary>
+<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">analytics_summary</a>(id:) -> Schedulin::Posts::Types::AnalyticsSummaryPostsResponse</code></summary>
 <dl>
 <dd>
 
@@ -613,7 +613,7 @@ client.posts.analytics_summary(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">analytics_series</a>(id) -> Schedulin::Posts::Types::AnalyticsSeriesPostsResponse</code></summary>
+<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">analytics_series</a>(id:) -> Schedulin::Posts::Types::AnalyticsSeriesPostsResponse</code></summary>
 <dl>
 <dd>
 
@@ -683,7 +683,7 @@ client.posts.analytics_series(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">publish_draft</a>(id, request) -> Schedulin::Types::Post</code></summary>
+<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">publish_draft</a>(id:, request) -> Schedulin::Types::Post</code></summary>
 <dl>
 <dd>
 
@@ -753,7 +753,7 @@ client.posts.publish_draft(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">update_tags</a>(id, request) -> Schedulin::Types::Post</code></summary>
+<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">update_tags</a>(id:, request) -> Schedulin::Types::Post</code></summary>
 <dl>
 <dd>
 
@@ -826,7 +826,7 @@ client.posts.update_tags(
 </dl>
 </details>
 
-<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">get_job_status</a>(id) -> Object</code></summary>
+<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">get_job_status</a>(id:) -> Object</code></summary>
 <dl>
 <dd>
 
@@ -943,7 +943,7 @@ client.social_accounts.list
 </dl>
 </details>
 
-<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">update</a>(id, request) -> Schedulin::SocialAccounts::Types::UpdateSocialAccountsResponse</code></summary>
+<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">update</a>(id:, request) -> Schedulin::SocialAccounts::Types::UpdateSocialAccountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1013,7 +1013,7 @@ client.social_accounts.update(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">delete</a>(id, request) -> Schedulin::SocialAccounts::Types::DeleteSocialAccountsResponse</code></summary>
+<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">delete</a>(id:, request) -> Schedulin::SocialAccounts::Types::DeleteSocialAccountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1075,7 +1075,7 @@ client.social_accounts.delete(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">update_timezone</a>(id, request) -> Schedulin::SocialAccounts::Types::UpdateTimezoneSocialAccountsResponse</code></summary>
+<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">update_timezone</a>(id:, request) -> Schedulin::SocialAccounts::Types::UpdateTimezoneSocialAccountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1148,7 +1148,7 @@ client.social_accounts.update_timezone(
 </dl>
 </details>
 
-<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">next_slots</a>(id) -> Schedulin::SocialAccounts::Types::NextSlotsSocialAccountsResponse</code></summary>
+<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">next_slots</a>(id:) -> Schedulin::SocialAccounts::Types::NextSlotsSocialAccountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1226,7 +1226,7 @@ client.social_accounts.next_slots(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">pinterest_boards</a>(id) -> Schedulin::SocialAccounts::Types::PinterestBoardsSocialAccountsResponse</code></summary>
+<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">pinterest_boards</a>(id:) -> Schedulin::SocialAccounts::Types::PinterestBoardsSocialAccountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1288,7 +1288,7 @@ client.social_accounts.pinterest_boards(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">tiktok_creator_info</a>(id) -> Schedulin::SocialAccounts::Types::TiktokCreatorInfoSocialAccountsResponse</code></summary>
+<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">tiktok_creator_info</a>(id:) -> Schedulin::SocialAccounts::Types::TiktokCreatorInfoSocialAccountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1494,7 +1494,7 @@ client.tags.create(
 </dl>
 </details>
 
-<details><summary><code>client.tags.<a href="/lib/schedulin/tags/client.rb">update</a>(id, request) -> Schedulin::Types::Tag</code></summary>
+<details><summary><code>client.tags.<a href="/lib/schedulin/tags/client.rb">update</a>(id:, request) -> Schedulin::Types::Tag</code></summary>
 <dl>
 <dd>
 
@@ -1572,7 +1572,7 @@ client.tags.update(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.tags.<a href="/lib/schedulin/tags/client.rb">delete</a>(id, request) -> Schedulin::Types::Tag</code></summary>
+<details><summary><code>client.tags.<a href="/lib/schedulin/tags/client.rb">delete</a>(id:, request) -> Schedulin::Types::Tag</code></summary>
 <dl>
 <dd>
 
@@ -1635,7 +1635,7 @@ client.tags.delete(id: "id")
 </details>
 
 ## Media
-<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">retrieve</a>(id) -> Schedulin::Types::Media</code></summary>
+<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">retrieve</a>(id:) -> Schedulin::Types::Media</code></summary>
 <dl>
 <dd>
 
@@ -1697,7 +1697,7 @@ client.media.retrieve(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">update</a>(id, request) -> Schedulin::Types::Media</code></summary>
+<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">update</a>(id:, request) -> Schedulin::Types::Media</code></summary>
 <dl>
 <dd>
 
@@ -1912,7 +1912,7 @@ client.media.list
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">set_tags</a>(media_id, request) -> Object</code></summary>
+<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">set_tags</a>(media_id:, request) -> Object</code></summary>
 <dl>
 <dd>
 
