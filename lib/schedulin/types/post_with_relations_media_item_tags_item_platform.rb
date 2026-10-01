@@ -12,6 +12,7 @@ module Schedulin
       LINKEDIN = "linkedin"
       PINTEREST = "pinterest"
       REDDIT = "reddit"
+      SNAPCHAT = "snapchat"
       THREADS = "threads"
       TIKTOK = "tiktok"
       TWITTER = "twitter"

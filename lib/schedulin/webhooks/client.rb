@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Schedulin
-  module Posts
+  module Webhooks
     class Client
       # @param client [Schedulin::Internal::Http::RawClient]
       #
@@ -10,69 +10,10 @@ module Schedulin
         @client = client
       end
 
-      # Search and filter posts with various criteria including status, date range, social accounts, and tags
+      # List the organization's webhook endpoints. Signing secrets are masked.
       #
       # @param request_options [Hash]
-      # @param params [Hash]
-      # @option request_options [String] :base_url
-      # @option request_options [Hash{String => Object}] :additional_headers
-      # @option request_options [Hash{String => Object}] :additional_query_parameters
-      # @option request_options [Hash{String => Object}] :additional_body_parameters
-      # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Integer, nil] :page
-      # @option params [Schedulin::Posts::Types::ListPostsRequestStatus, nil] :status
-      # @option params [Schedulin::Posts::Types::ListPostsRequestStatusesItem, nil] :statuses
-      # @option params [Schedulin::Posts::Types::ListPostsRequestApprovalStatus, nil] :approval_status
-      # @option params [Schedulin::Types::ListPostsRequestScheduledAt, nil] :scheduled_at
-      # @option params [String, nil] :tag_ids
-      # @option params [Schedulin::Posts::Types::ListPostsRequestTagMode, nil] :tag_mode
-      # @option params [String, nil] :social_account_ids
-      # @option params [Integer, nil] :limit
-      #
-      # @example
-      #   client.posts.list
-      #
-      # @return [Schedulin::Posts::Types::ListPostsResponse]
-      def list(request_options: {}, **params)
-        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
-        query_params = {}
-        query_params["page"] = params[:page] if params.key?(:page)
-        query_params["status"] = params[:status] if params.key?(:status)
-        query_params["statuses"] = params[:statuses] if params.key?(:statuses)
-        query_params["approvalStatus"] = params[:approval_status] if params.key?(:approval_status)
-        query_params["scheduledAt"] = params[:scheduled_at] if params.key?(:scheduled_at)
-        query_params["tagIds"] = params[:tag_ids] if params.key?(:tag_ids)
-        query_params["tagMode"] = params[:tag_mode] if params.key?(:tag_mode)
-        query_params["socialAccountIds"] = params[:social_account_ids] if params.key?(:social_account_ids)
-        query_params["limit"] = params[:limit] if params.key?(:limit)
-
-        request = Schedulin::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
-          method: "GET",
-          path: "v0/posts",
-          query: query_params,
-          request_options: request_options
-        )
-        begin
-          response = @client.send(request)
-        rescue Net::HTTPRequestTimeout
-          raise Schedulin::Errors::TimeoutError
-        end
-        code = response.code.to_i
-        if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : Schedulin::Posts::Types::ListPostsResponse.load(response.body))
-        else
-          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
-        end
-      end
-
-      # Create a new post with media, tags, and scheduling options. Media items may reference a stored library URL or
-      # any publicly reachable image/video URL — external URLs are downloaded into the media library automatically, so
-      # clients that cannot issue a raw presigned PUT can attach media in one call.
-      #
-      # @param request_options [Hash]
-      # @param params [Schedulin::Posts::Types::PostCreate]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -80,60 +21,14 @@ module Schedulin
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @example
-      #   client.posts.create(
-      #     caption: "caption",
-      #     social_account_id: "socialAccountId"
-      #   )
-      #
-      # @return [Schedulin::Posts::Types::CreatePostsResponse]
-      def create(request_options: {}, **params)
-        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
-        request = Schedulin::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
-          method: "POST",
-          path: "v0/posts",
-          body: Schedulin::Posts::Types::PostCreate.new(params).to_h,
-          request_options: request_options
-        )
-        begin
-          response = @client.send(request)
-        rescue Net::HTTPRequestTimeout
-          raise Schedulin::Errors::TimeoutError
-        end
-        code = response.code.to_i
-        if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : Schedulin::Posts::Types::CreatePostsResponse.load(response.body))
-        else
-          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
-        end
-      end
-
-      # Returns counts of posts for the Queue, Drafts, Approvals, and Sent tabs
-      #
-      # @param request_options [Hash]
-      # @param params [Hash]
-      # @option request_options [String] :base_url
-      # @option request_options [Hash{String => Object}] :additional_headers
-      # @option request_options [Hash{String => Object}] :additional_query_parameters
-      # @option request_options [Hash{String => Object}] :additional_body_parameters
-      # @option request_options [Integer] :timeout_in_seconds
-      # @option params [String, nil] :social_account_ids
-      #
-      # @example
-      #   client.posts.count_by_tab
+      #   client.webhooks.list
       #
       # @return [Object]
-      def count_by_tab(request_options: {}, **params)
-        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
-        query_params = {}
-        query_params["socialAccountIds"] = params[:social_account_ids] if params.key?(:social_account_ids)
-
+      def list(request_options: {}, **_params)
         request = Schedulin::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "v0/posts/counts/by-tab",
-          query: query_params,
+          path: "v0/webhooks",
           request_options: request_options
         )
         begin
@@ -150,7 +45,48 @@ module Schedulin
         end
       end
 
-      # Retrieve a single post by its ID with all relations
+      # Register an HTTPS endpoint for event deliveries. The response includes the signing secret ONCE — store it; later
+      # reads return a masked value.
+      #
+      # @param request_options [Hash]
+      # @param params [Schedulin::Webhooks::Types::CreateWebhooksRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.webhooks.create(
+      #     url: "url",
+      #     events: ["post.published"]
+      #   )
+      #
+      # @return [Object]
+      def create(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "v0/webhooks",
+          body: Schedulin::Webhooks::Types::CreateWebhooksRequest.new(params).to_h,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # Retrieve one webhook endpoint, including failure counters. The signing secret is masked.
       #
       # @param request_options [Hash]
       # @param params [Hash]
@@ -162,15 +98,15 @@ module Schedulin
       # @option params [String] :id
       #
       # @example
-      #   client.posts.retrieve(id: "id")
+      #   client.webhooks.retrieve(id: "id")
       #
-      # @return [Schedulin::Types::PostWithRelations]
+      # @return [Object]
       def retrieve(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         request = Schedulin::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "v0/posts/#{URI.encode_uri_component(params[:id].to_s)}",
+          path: "v0/webhooks/#{URI.encode_uri_component(params[:id].to_s)}",
           request_options: request_options
         )
         begin
@@ -180,17 +116,17 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : Schedulin::Types::PostWithRelations.load(response.body))
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end
 
-      # Update an existing post by its ID
+      # Delete a webhook endpoint and its delivery history. Deliveries already in flight are dropped.
       #
       # @param request_options [Hash]
-      # @param params [Schedulin::Posts::Types::UpdatePostsRequest]
+      # @param params [Schedulin::Webhooks::Types::DeleteWebhooksRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -199,61 +135,19 @@ module Schedulin
       # @option params [String] :id
       #
       # @example
-      #   client.posts.update(id: "id")
+      #   client.webhooks.delete(id: "id")
       #
-      # @return [Schedulin::Types::Post]
-      def update(request_options: {}, **params)
-        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
-        request_data = Schedulin::Posts::Types::UpdatePostsRequest.new(params).to_h
-        non_body_param_names = %w[id]
-        body = request_data.except(*non_body_param_names)
-
-        request = Schedulin::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
-          method: "PUT",
-          path: "v0/posts/#{URI.encode_uri_component(params[:id].to_s)}",
-          body: body,
-          request_options: request_options
-        )
-        begin
-          response = @client.send(request)
-        rescue Net::HTTPRequestTimeout
-          raise Schedulin::Errors::TimeoutError
-        end
-        code = response.code.to_i
-        if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : Schedulin::Types::Post.load(response.body))
-        else
-          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
-        end
-      end
-
-      # Delete a post by its ID
-      #
-      # @param request_options [Hash]
-      # @param params [Schedulin::Posts::Types::DeletePostsRequest]
-      # @option request_options [String] :base_url
-      # @option request_options [Hash{String => Object}] :additional_headers
-      # @option request_options [Hash{String => Object}] :additional_query_parameters
-      # @option request_options [Hash{String => Object}] :additional_body_parameters
-      # @option request_options [Integer] :timeout_in_seconds
-      # @option params [String] :id
-      #
-      # @example
-      #   client.posts.delete(id: "id")
-      #
-      # @return [Schedulin::Types::Post]
+      # @return [Object]
       def delete(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
-        request_data = Schedulin::Posts::Types::DeletePostsRequest.new(params).to_h
+        request_data = Schedulin::Webhooks::Types::DeleteWebhooksRequest.new(params).to_h
         non_body_param_names = %w[id]
         body = request_data.except(*non_body_param_names)
 
         request = Schedulin::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "v0/posts/#{URI.encode_uri_component(params[:id].to_s)}",
+          path: "v0/webhooks/#{URI.encode_uri_component(params[:id].to_s)}",
           body: body,
           request_options: request_options
         )
@@ -264,17 +158,17 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : Schedulin::Types::Post.load(response.body))
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end
 
-      # Retrieve the latest analytics snapshot for a post
+      # Update URL, subscribed events, description, or enabled state. Re-enabling resets the failure streak.
       #
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param params [Schedulin::Webhooks::Types::UpdateWebhooksRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -283,15 +177,20 @@ module Schedulin
       # @option params [String] :id
       #
       # @example
-      #   client.posts.analytics_summary(id: "id")
+      #   client.webhooks.update(id: "id")
       #
-      # @return [Schedulin::Posts::Types::AnalyticsSummaryPostsResponse]
-      def analytics_summary(request_options: {}, **params)
+      # @return [Object]
+      def update(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request_data = Schedulin::Webhooks::Types::UpdateWebhooksRequest.new(params).to_h
+        non_body_param_names = %w[id]
+        body = request_data.except(*non_body_param_names)
+
         request = Schedulin::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
-          method: "GET",
-          path: "v0/posts/#{URI.encode_uri_component(params[:id].to_s)}/analytics/summary",
+          method: "PATCH",
+          path: "v0/webhooks/#{URI.encode_uri_component(params[:id].to_s)}",
+          body: body,
           request_options: request_options
         )
         begin
@@ -301,14 +200,98 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : Schedulin::Posts::Types::AnalyticsSummaryPostsResponse.load(response.body))
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
         end
       end
 
-      # Retrieve time series analytics metrics for a post
+      # Generate a new signing secret for the endpoint and return it ONCE. The old secret stops signing immediately.
+      #
+      # @param request_options [Hash]
+      # @param params [Schedulin::Webhooks::Types::RotateSecretWebhooksRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
+      #
+      # @example
+      #   client.webhooks.rotate_secret(id: "id")
+      #
+      # @return [Object]
+      def rotate_secret(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request_data = Schedulin::Webhooks::Types::RotateSecretWebhooksRequest.new(params).to_h
+        non_body_param_names = %w[id]
+        body = request_data.except(*non_body_param_names)
+
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "v0/webhooks/#{URI.encode_uri_component(params[:id].to_s)}/rotate-secret",
+          body: body,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # Send a signed `ping` event to the endpoint URL and record it in the delivery history.
+      #
+      # @param request_options [Hash]
+      # @param params [Schedulin::Webhooks::Types::TestWebhooksRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
+      #
+      # @example
+      #   client.webhooks.test(id: "id")
+      #
+      # @return [Object]
+      def test(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request_data = Schedulin::Webhooks::Types::TestWebhooksRequest.new(params).to_h
+        non_body_param_names = %w[id]
+        body = request_data.except(*non_body_param_names)
+
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "v0/webhooks/#{URI.encode_uri_component(params[:id].to_s)}/test",
+          body: body,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # Delivery history for a webhook endpoint: event, status, attempts, last response code, and payload.
       #
       # @param request_options [Hash]
       # @param params [Hash]
@@ -319,20 +302,22 @@ module Schedulin
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
       # @option params [Integer, nil] :limit
+      # @option params [Integer, nil] :page
       #
       # @example
-      #   client.posts.analytics_series(id: "id")
+      #   client.webhooks.list_deliveries(id: "id")
       #
-      # @return [Schedulin::Posts::Types::AnalyticsSeriesPostsResponse]
-      def analytics_series(request_options: {}, **params)
+      # @return [Object]
+      def list_deliveries(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)
+        query_params["page"] = params[:page] if params.key?(:page)
 
         request = Schedulin::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "v0/posts/#{URI.encode_uri_component(params[:id].to_s)}/analytics/series",
+          path: "v0/webhooks/#{URI.encode_uri_component(params[:id].to_s)}/deliveries",
           query: query_params,
           request_options: request_options
         )
@@ -343,94 +328,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : Schedulin::Posts::Types::AnalyticsSeriesPostsResponse.load(response.body))
-        else
-          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
-        end
-      end
-
-      # Publish a draft post to connected social media accounts
-      #
-      # @param request_options [Hash]
-      # @param params [Schedulin::Posts::Types::PublishDraftPostsRequest]
-      # @option request_options [String] :base_url
-      # @option request_options [Hash{String => Object}] :additional_headers
-      # @option request_options [Hash{String => Object}] :additional_query_parameters
-      # @option request_options [Hash{String => Object}] :additional_body_parameters
-      # @option request_options [Integer] :timeout_in_seconds
-      # @option params [String] :id
-      #
-      # @example
-      #   client.posts.publish_draft(id: "id")
-      #
-      # @return [Schedulin::Types::Post]
-      def publish_draft(request_options: {}, **params)
-        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
-        request_data = Schedulin::Posts::Types::PublishDraftPostsRequest.new(params).to_h
-        non_body_param_names = %w[id]
-        body = request_data.except(*non_body_param_names)
-
-        request = Schedulin::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
-          method: "POST",
-          path: "v0/posts/#{URI.encode_uri_component(params[:id].to_s)}/publish",
-          body: body,
-          request_options: request_options
-        )
-        begin
-          response = @client.send(request)
-        rescue Net::HTTPRequestTimeout
-          raise Schedulin::Errors::TimeoutError
-        end
-        code = response.code.to_i
-        if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : Schedulin::Types::Post.load(response.body))
-        else
-          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
-        end
-      end
-
-      # Replace all tags on a post. No status restrictions apply.
-      #
-      # @param request_options [Hash]
-      # @param params [Schedulin::Posts::Types::UpdateTagsPostsRequest]
-      # @option request_options [String] :base_url
-      # @option request_options [Hash{String => Object}] :additional_headers
-      # @option request_options [Hash{String => Object}] :additional_query_parameters
-      # @option request_options [Hash{String => Object}] :additional_body_parameters
-      # @option request_options [Integer] :timeout_in_seconds
-      # @option params [String] :id
-      #
-      # @example
-      #   client.posts.update_tags(
-      #     id: "id",
-      #     tag_ids: ["tagIds"]
-      #   )
-      #
-      # @return [Schedulin::Types::Post]
-      def update_tags(request_options: {}, **params)
-        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
-        request_data = Schedulin::Posts::Types::UpdateTagsPostsRequest.new(params).to_h
-        non_body_param_names = %w[id]
-        body = request_data.except(*non_body_param_names)
-
-        request = Schedulin::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
-          method: "PUT",
-          path: "v0/posts/#{URI.encode_uri_component(params[:id].to_s)}/tags",
-          body: body,
-          request_options: request_options
-        )
-        begin
-          response = @client.send(request)
-        rescue Net::HTTPRequestTimeout
-          raise Schedulin::Errors::TimeoutError
-        end
-        code = response.code.to_i
-        if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : Schedulin::Types::Post.load(response.body))
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

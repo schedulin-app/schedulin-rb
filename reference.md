@@ -138,7 +138,7 @@ client.posts.list
 <dl>
 <dd>
 
-Create a new post with media, tags, and scheduling options
+Create a new post with media, tags, and scheduling options. Media items may reference a stored library URL or any publicly reachable image/video URL — external URLs are downloaded into the media library automatically, so clients that cannot issue a raw presigned PUT can attach media in one call.
 </dd>
 </dl>
 </dd>
@@ -172,6 +172,14 @@ client.posts.create(
 <dd>
 
 **caption:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `String` 
     
 </dd>
 </dl>
@@ -826,68 +834,6 @@ client.posts.update_tags(
 </dl>
 </details>
 
-<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">get_job_status</a>(id:) -> Object</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the processing job status and logs for a post
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```ruby
-client.posts.get_job_status(id: "id")
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `Schedulin::Posts::RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## SocialAccounts
 <details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">list</a>() -> Schedulin::SocialAccounts::Types::ListSocialAccountsResponse</code></summary>
 <dl>
@@ -927,6 +873,141 @@ client.social_accounts.list
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::SocialAccounts::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">list_whop_companies</a>(id:) -> Schedulin::SocialAccounts::Types::ListWhopCompaniesSocialAccountsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List companies available to a connected Whop account. Select one before requesting its forum experiences.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.social_accounts.list_whop_companies(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::SocialAccounts::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.social_accounts.<a href="/lib/schedulin/social_accounts/client.rb">list_whop_forums</a>(id:) -> Schedulin::SocialAccounts::Types::ListWhopForumsSocialAccountsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List forum experiences for a Whop company. Use an item id as platformConfiguration.experience.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.social_accounts.list_whop_forums(
+  id: "id",
+  company_id: "companyId"
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**company_id:** `String` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -1635,6 +1716,240 @@ client.tags.delete(id: "id")
 </details>
 
 ## Media
+<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">create_from_url</a>(request) -> Object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Downloads a publicly reachable image or video into the media library and returns the media record. Use the returned `url` in `media[].url` when creating a post. Prefer this over the presign flow whenever your client cannot issue a raw HTTP PUT (e.g. an AI agent). The source URL must be public (no auth), http(s), and at most the post upload limit (250 MB); SVG and other active content is rejected.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.media.create_from_url(url: "url")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**url:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alt:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content_type:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Media::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">create_upload_link</a>(request) -> Object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a short-lived URL to a page where the user uploads files from their device (or a pasted attachment) straight into the media library. Hand the URL to the user; once they've uploaded, call GET /v0/media (list media, newest first) and reference the returned `url` when creating a post. Use this whenever the file isn't already at a public URL.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.media.create_upload_link
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**expires_in_hours:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Media::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">upload</a>(request) -> Object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Upload raw image, video, or audio bytes directly as multipart/form-data. The file is stored in your media library and the record is returned; use its `url` in `media[].url` when creating a post. Max 250 MB; SVG and other active content is rejected. For a file already hosted at a public URL, prefer POST /v0/media/from-url.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.media.upload(file: "file")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**file:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alt:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content_type:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Media::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">retrieve</a>(id:) -> Schedulin::Types::Media</code></summary>
 <dl>
 <dd>
@@ -1791,6 +2106,68 @@ client.media.update(
 <dd>
 
 **duration:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Media::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">v0media_delete</a>(id:, request) -> Object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a media object and remove its files from storage. Fails with a conflict when the media is attached to any post — remove it from those posts (or delete them) first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.media.v0media_delete(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
     
 </dd>
 </dl>
@@ -2172,6 +2549,711 @@ client.platforms.list
 <dd>
 
 **request_options:** `Schedulin::Platforms::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Ai
+<details><summary><code>client.ai.<a href="/lib/schedulin/ai/client.rb">generate_image</a>(request) -> Object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Submit an AI image generation job
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.ai.generate_image(prompt: "prompt")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**prompt:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_key:** `Schedulin::Ai::Types::GenerateImageAiRequestModelKey` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**width:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**height:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Ai::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ai.<a href="/lib/schedulin/ai/client.rb">get_generation</a>() -> Object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the status and details of a generation job
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.ai.get_generation(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Ai::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Webhooks
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">list</a>() -> Object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the organization's webhook endpoints. Signing secrets are masked.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.webhooks.list
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Webhooks::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">create</a>(request) -> Object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Register an HTTPS endpoint for event deliveries. The response includes the signing secret ONCE — store it; later reads return a masked value.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.webhooks.create(
+  url: "url",
+  events: ["post.published"]
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**url:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**events:** `Internal::Types::Array[Schedulin::Webhooks::Types::CreateWebhooksRequestEventsItem]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Webhooks::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">retrieve</a>(id:) -> Object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve one webhook endpoint, including failure counters. The signing secret is masked.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.webhooks.retrieve(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Webhooks::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">delete</a>(id:, request) -> Object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a webhook endpoint and its delivery history. Deliveries already in flight are dropped.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.webhooks.delete(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Webhooks::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">update</a>(id:, request) -> Object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update URL, subscribed events, description, or enabled state. Re-enabling resets the failure streak.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.webhooks.update(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**url:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**events:** `Internal::Types::Array[Schedulin::Webhooks::Types::UpdateWebhooksRequestEventsItem]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enabled:** `Internal::Types::Boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Webhooks::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">rotate_secret</a>(id:, request) -> Object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generate a new signing secret for the endpoint and return it ONCE. The old secret stops signing immediately.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.webhooks.rotate_secret(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Webhooks::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">test</a>(id:, request) -> Object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Send a signed `ping` event to the endpoint URL and record it in the delivery history.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.webhooks.test(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Webhooks::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">list_deliveries</a>(id:) -> Object</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delivery history for a webhook endpoint: event, status, attempts, last response code, and payload.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.webhooks.list_deliveries(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Webhooks::RequestOptions` 
     
 </dd>
 </dl>

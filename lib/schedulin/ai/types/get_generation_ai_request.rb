@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Schedulin
-  module Posts
+  module Ai
     module Types
-      class GetJobStatusPostsRequest < Internal::Types::Model
+      class GetGenerationAiRequest < Internal::Types::Model
         field :id, -> { String }, optional: false, nullable: false
       end
     end

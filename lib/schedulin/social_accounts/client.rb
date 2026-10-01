@@ -20,6 +20,9 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.social_accounts.list
+      #
       # @return [Schedulin::SocialAccounts::Types::ListSocialAccountsResponse]
       def list(request_options: {}, **_params)
         request = Schedulin::Internal::JSON::Request.new(
@@ -35,7 +38,89 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::SocialAccounts::Types::ListSocialAccountsResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::SocialAccounts::Types::ListSocialAccountsResponse.load(response.body))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # List companies available to a connected Whop account. Select one before requesting its forum experiences.
+      #
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
+      #
+      # @example
+      #   client.social_accounts.list_whop_companies(id: "id")
+      #
+      # @return [Schedulin::SocialAccounts::Types::ListWhopCompaniesSocialAccountsResponse]
+      def list_whop_companies(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "GET",
+          path: "v0/social-accounts/#{URI.encode_uri_component(params[:id].to_s)}/whop-companies",
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : Schedulin::SocialAccounts::Types::ListWhopCompaniesSocialAccountsResponse.load(response.body))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # List forum experiences for a Whop company. Use an item id as platformConfiguration.experience.
+      #
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
+      # @option params [String] :company_id
+      #
+      # @example
+      #   client.social_accounts.list_whop_forums(
+      #     id: "id",
+      #     company_id: "companyId"
+      #   )
+      #
+      # @return [Schedulin::SocialAccounts::Types::ListWhopForumsSocialAccountsResponse]
+      def list_whop_forums(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        query_params = {}
+        query_params["companyId"] = params[:company_id] if params.key?(:company_id)
+
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "GET",
+          path: "v0/social-accounts/#{URI.encode_uri_component(params[:id].to_s)}/whop-forums",
+          query: query_params,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : Schedulin::SocialAccounts::Types::ListWhopForumsSocialAccountsResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -52,6 +137,9 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
+      #
+      # @example
+      #   client.social_accounts.update(id: "id")
       #
       # @return [Schedulin::SocialAccounts::Types::UpdateSocialAccountsResponse]
       def update(request_options: {}, **params)
@@ -74,7 +162,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::SocialAccounts::Types::UpdateSocialAccountsResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::SocialAccounts::Types::UpdateSocialAccountsResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -91,6 +179,9 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
+      #
+      # @example
+      #   client.social_accounts.delete(id: "id")
       #
       # @return [Schedulin::SocialAccounts::Types::DeleteSocialAccountsResponse]
       def delete(request_options: {}, **params)
@@ -113,7 +204,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::SocialAccounts::Types::DeleteSocialAccountsResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::SocialAccounts::Types::DeleteSocialAccountsResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -130,6 +221,12 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
+      #
+      # @example
+      #   client.social_accounts.update_timezone(
+      #     id: "id",
+      #     timezone: "timezone"
+      #   )
       #
       # @return [Schedulin::SocialAccounts::Types::UpdateTimezoneSocialAccountsResponse]
       def update_timezone(request_options: {}, **params)
@@ -152,7 +249,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::SocialAccounts::Types::UpdateTimezoneSocialAccountsResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::SocialAccounts::Types::UpdateTimezoneSocialAccountsResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -173,6 +270,9 @@ module Schedulin
       # @option params [String] :id
       # @option params [Integer, nil] :limit
       # @option params [String, nil] :after
+      #
+      # @example
+      #   client.social_accounts.next_slots(id: "id")
       #
       # @return [Schedulin::SocialAccounts::Types::NextSlotsSocialAccountsResponse]
       def next_slots(request_options: {}, **params)
@@ -195,7 +295,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::SocialAccounts::Types::NextSlotsSocialAccountsResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::SocialAccounts::Types::NextSlotsSocialAccountsResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -214,6 +314,9 @@ module Schedulin
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
       #
+      # @example
+      #   client.social_accounts.pinterest_boards(id: "id")
+      #
       # @return [Schedulin::SocialAccounts::Types::PinterestBoardsSocialAccountsResponse]
       def pinterest_boards(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
@@ -230,7 +333,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::SocialAccounts::Types::PinterestBoardsSocialAccountsResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::SocialAccounts::Types::PinterestBoardsSocialAccountsResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -249,6 +352,9 @@ module Schedulin
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
       #
+      # @example
+      #   client.social_accounts.tiktok_creator_info(id: "id")
+      #
       # @return [Schedulin::SocialAccounts::Types::TiktokCreatorInfoSocialAccountsResponse]
       def tiktok_creator_info(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
@@ -265,7 +371,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::SocialAccounts::Types::TiktokCreatorInfoSocialAccountsResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::SocialAccounts::Types::TiktokCreatorInfoSocialAccountsResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

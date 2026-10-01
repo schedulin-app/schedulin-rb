@@ -22,6 +22,9 @@ module Schedulin
       # @option params [String, nil] :q
       # @option params [Integer, nil] :limit
       #
+      # @example
+      #   client.tags.list
+      #
       # @return [Schedulin::Tags::Types::ListTagsResponse]
       def list(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
@@ -43,7 +46,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::Tags::Types::ListTagsResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::Tags::Types::ListTagsResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -59,6 +62,12 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.tags.create(
+      #     name: "name",
+      #     color: "color"
+      #   )
       #
       # @return [Schedulin::Types::Tag]
       def create(request_options: {}, **params)
@@ -77,7 +86,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::Types::Tag.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::Types::Tag.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -94,6 +103,9 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
+      #
+      # @example
+      #   client.tags.update(id: "id")
       #
       # @return [Schedulin::Types::Tag]
       def update(request_options: {}, **params)
@@ -116,7 +128,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::Types::Tag.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::Types::Tag.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -133,6 +145,9 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
+      #
+      # @example
+      #   client.tags.delete(id: "id")
       #
       # @return [Schedulin::Types::Tag]
       def delete(request_options: {}, **params)
@@ -155,7 +170,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::Types::Tag.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::Types::Tag.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

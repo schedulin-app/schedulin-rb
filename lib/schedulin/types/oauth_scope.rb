@@ -16,6 +16,10 @@ module Schedulin
       MEDIA_WRITE = "media:write"
       ANALYTICS_READ = "analytics:read"
       ORG_READ = "org:read"
+      AI_READ = "ai:read"
+      AI_WRITE = "ai:write"
+      WEBHOOKS_READ = "webhooks:read"
+      WEBHOOKS_WRITE = "webhooks:write"
     end
   end
 end

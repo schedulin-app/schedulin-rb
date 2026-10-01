@@ -20,6 +20,8 @@ module Schedulin
 
         field :analytics_disabled_at, -> { String }, optional: false, nullable: true, api_name: "analyticsDisabledAt"
 
+        field :webhook_subscription_failed_at, -> { String }, optional: false, nullable: true, api_name: "webhookSubscriptionFailedAt"
+
         field :created_at, -> { String }, optional: false, nullable: false, api_name: "createdAt"
 
         field :updated_at, -> { String }, optional: false, nullable: false, api_name: "updatedAt"

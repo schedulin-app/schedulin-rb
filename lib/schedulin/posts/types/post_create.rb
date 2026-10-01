@@ -6,6 +6,8 @@ module Schedulin
       class PostCreate < Internal::Types::Model
         field :caption, -> { String }, optional: false, nullable: false
 
+        field :title, -> { String }, optional: true, nullable: false
+
         field :scheduled_at, -> { String }, optional: true, nullable: false, api_name: "scheduledAt"
 
         field :social_account_id, -> { String }, optional: false, nullable: false, api_name: "socialAccountId"

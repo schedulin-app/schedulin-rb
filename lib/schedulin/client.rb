@@ -42,5 +42,15 @@ module Schedulin
     def platforms
       @platforms ||= Schedulin::Platforms::Client.new(client: @raw_client)
     end
+
+    # @return [Schedulin::Ai::Client]
+    def ai
+      @ai ||= Schedulin::Ai::Client.new(client: @raw_client)
+    end
+
+    # @return [Schedulin::Webhooks::Client]
+    def webhooks
+      @webhooks ||= Schedulin::Webhooks::Client.new(client: @raw_client)
+    end
   end
 end

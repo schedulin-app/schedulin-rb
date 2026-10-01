@@ -10,6 +10,125 @@ module Schedulin
         @client = client
       end
 
+      # Downloads a publicly reachable image or video into the media library and returns the media record. Use the
+      # returned `url` in `media[].url` when creating a post. Prefer this over the presign flow whenever your client
+      # cannot issue a raw HTTP PUT (e.g. an AI agent). The source URL must be public (no auth), http(s), and at most
+      # the post upload limit (250 MB); SVG and other active content is rejected.
+      #
+      # @param request_options [Hash]
+      # @param params [Schedulin::Media::Types::CreateFromURLMediaRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.media.create_from_url(url: "url")
+      #
+      # @return [Object]
+      def create_from_url(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "v0/media/from-url",
+          body: Schedulin::Media::Types::CreateFromURLMediaRequest.new(params).to_h,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # Returns a short-lived URL to a page where the user uploads files from their device (or a pasted attachment)
+      # straight into the media library. Hand the URL to the user; once they've uploaded, call GET /v0/media (list
+      # media, newest first) and reference the returned `url` when creating a post. Use this whenever the file isn't
+      # already at a public URL.
+      #
+      # @param request_options [Hash]
+      # @param params [Schedulin::Media::Types::CreateUploadLinkMediaRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.media.create_upload_link
+      #
+      # @return [Object]
+      def create_upload_link(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "v0/media/upload-link",
+          body: Schedulin::Media::Types::CreateUploadLinkMediaRequest.new(params).to_h,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # Upload raw image, video, or audio bytes directly as multipart/form-data. The file is stored in your media
+      # library and the record is returned; use its `url` in `media[].url` when creating a post. Max 250 MB; SVG and
+      # other active content is rejected. For a file already hosted at a public URL, prefer POST /v0/media/from-url.
+      #
+      # @param request_options [Hash]
+      # @param params [Schedulin::Media::Types::UploadMediaRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.media.upload(file: "file")
+      #
+      # @return [Object]
+      def upload(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "v0/media/upload",
+          body: Schedulin::Media::Types::UploadMediaRequest.new(params).to_h,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
       # Retrieve media information by its ID
       #
       # @param request_options [Hash]
@@ -20,6 +139,9 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
+      #
+      # @example
+      #   client.media.retrieve(id: "id")
       #
       # @return [Schedulin::Types::Media, nil]
       def retrieve(request_options: {}, **params)
@@ -36,10 +158,12 @@ module Schedulin
           raise Schedulin::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : Schedulin::Types::Media.load(response.body))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # Update media information and metadata
@@ -52,6 +176,12 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
+      #
+      # @example
+      #   client.media.update(
+      #     id: "id",
+      #     url: "url"
+      #   )
       #
       # @return [Schedulin::Types::Media]
       def update(request_options: {}, **params)
@@ -74,7 +204,50 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::Types::Media.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::Types::Media.load(response.body))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # Delete a media object and remove its files from storage. Fails with a conflict when the media is attached to any
+      # post — remove it from those posts (or delete them) first.
+      #
+      # @param request_options [Hash]
+      # @param params [Schedulin::Media::Types::V0MediaDeleteRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
+      #
+      # @example
+      #   client.media.v0media_delete(id: "id")
+      #
+      # @return [Object]
+      def v0media_delete(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request_data = Schedulin::Media::Types::V0MediaDeleteRequest.new(params).to_h
+        non_body_param_names = %w[id]
+        body = request_data.except(*non_body_param_names)
+
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "DELETE",
+          path: "v0/media/#{URI.encode_uri_component(params[:id].to_s)}",
+          body: body,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -96,6 +269,9 @@ module Schedulin
       # @option params [Schedulin::Media::Types::ListMediaRequestType, nil] :type
       # @option params [String, nil] :tag_ids
       # @option params [Schedulin::Media::Types::ListMediaRequestTagMode, nil] :tag_mode
+      #
+      # @example
+      #   client.media.list
       #
       # @return [Schedulin::Media::Types::ListMediaResponse]
       def list(request_options: {}, **params)
@@ -122,7 +298,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::Media::Types::ListMediaResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::Media::Types::ListMediaResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -139,6 +315,12 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :media_id
+      #
+      # @example
+      #   client.media.set_tags(
+      #     media_id: "mediaId",
+      #     tag_ids: ["tagIds"]
+      #   )
       #
       # @return [Object]
       def set_tags(request_options: {}, **params)
@@ -160,10 +342,12 @@ module Schedulin
           raise Schedulin::Errors::TimeoutError
         end
         code = response.code.to_i
-        return if code.between?(200, 299)
-
-        error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
       end
 
       # Return media counts grouped by tag for the organization
@@ -175,6 +359,9 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.media.count_by_tag
       #
       # @return [Schedulin::Media::Types::CountByTagMediaResponse]
       def count_by_tag(request_options: {}, **_params)
@@ -191,7 +378,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::Media::Types::CountByTagMediaResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::Media::Types::CountByTagMediaResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -208,6 +395,12 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.media.create_presigned_post(
+      #     content_type: "contentType",
+      #     key: "key"
+      #   )
       #
       # @return [Schedulin::Types::PresignedPost]
       def create_presigned_post(request_options: {}, **params)
@@ -226,7 +419,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::Types::PresignedPost.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::Types::PresignedPost.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

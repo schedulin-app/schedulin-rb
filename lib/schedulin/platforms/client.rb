@@ -22,6 +22,9 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
+      # @example
+      #   client.platforms.list
+      #
       # @return [Schedulin::Platforms::Types::ListPlatformsResponse]
       def list(request_options: {}, **_params)
         request = Schedulin::Internal::JSON::Request.new(
@@ -37,7 +40,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Schedulin::Platforms::Types::ListPlatformsResponse.load(response.body)
+          (response.body.to_s.empty? ? nil : Schedulin::Platforms::Types::ListPlatformsResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

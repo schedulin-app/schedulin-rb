@@ -9,6 +9,8 @@ module Schedulin
         field :max, -> { Integer }, optional: false, nullable: false
 
         field :allowed_types, -> { Internal::Types::Array[Schedulin::Platforms::Types::ListPlatformsResponseDataItemMediaRulesAllowedTypesItem] }, optional: true, nullable: false, api_name: "allowedTypes"
+
+        field :allowed_dimensions, -> { Internal::Types::Array[Schedulin::Platforms::Types::ListPlatformsResponseDataItemMediaRulesAllowedDimensionsItem] }, optional: true, nullable: false, api_name: "allowedDimensions"
       end
     end
   end
