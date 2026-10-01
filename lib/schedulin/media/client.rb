@@ -95,7 +95,7 @@ module Schedulin
       # other active content is rejected. For a file already hosted at a public URL, prefer POST /v0/media/from-url.
       #
       # @param request_options [Hash]
-      # @param params [Schedulin::Media::Types::UploadMediaRequest]
+      # @param params [void]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -103,16 +103,43 @@ module Schedulin
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @example
-      #   client.media.upload(file: "file")
+      #   client.media.upload
       #
       # @return [Object]
       def upload(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
-        request = Schedulin::Internal::JSON::Request.new(
+        body = Internal::Multipart::FormData.new
+
+        if params[:file]
+          body.add_file(
+            name: "file",
+            file: params[:file]
+          )
+        end
+        unless params[:name].nil?
+          body.add(
+            name: "name",
+            value: params[:name]
+          )
+        end
+        unless params[:alt].nil?
+          body.add(
+            name: "alt",
+            value: params[:alt]
+          )
+        end
+        unless params[:content_type].nil?
+          body.add(
+            name: "contentType",
+            value: params[:content_type]
+          )
+        end
+
+        request = Schedulin::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "v0/media/upload",
-          body: Schedulin::Media::Types::UploadMediaRequest.new(params).to_h,
+          body: body,
           request_options: request_options
         )
         begin
@@ -215,7 +242,7 @@ module Schedulin
       # post — remove it from those posts (or delete them) first.
       #
       # @param request_options [Hash]
-      # @param params [Schedulin::Media::Types::V0MediaDeleteRequest]
+      # @param params [Schedulin::Media::Types::DeleteMediaRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -224,12 +251,12 @@ module Schedulin
       # @option params [String] :id
       #
       # @example
-      #   client.media.v0media_delete(id: "id")
+      #   client.media.delete(id: "id")
       #
       # @return [Object]
-      def v0media_delete(request_options: {}, **params)
+      def delete(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
-        request_data = Schedulin::Media::Types::V0MediaDeleteRequest.new(params).to_h
+        request_data = Schedulin::Media::Types::DeleteMediaRequest.new(params).to_h
         non_body_param_names = %w[id]
         body = request_data.except(*non_body_param_names)
 

@@ -1891,7 +1891,7 @@ Upload raw image, video, or audio bytes directly as multipart/form-data. The fil
 <dd>
 
 ```ruby
-client.media.upload(file: "file")
+client.media.upload
 ```
 </dd>
 </dl>
@@ -1902,38 +1902,6 @@ client.media.upload(file: "file")
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**file:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**alt:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**content_type:** `String` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -2125,7 +2093,7 @@ client.media.update(
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">v0media_delete</a>(id:, request) -> Object</code></summary>
+<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">delete</a>(id:, request) -> Object</code></summary>
 <dl>
 <dd>
 
@@ -2152,7 +2120,7 @@ Delete a media object and remove its files from storage. Fails with a conflict w
 <dd>
 
 ```ruby
-client.media.v0media_delete(id: "id")
+client.media.delete(id: "id")
 ```
 </dd>
 </dl>

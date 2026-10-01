@@ -3,7 +3,7 @@
 module Schedulin
   module Media
     module Types
-      class V0MediaDeleteRequest < Internal::Types::Model
+      class DeleteMediaRequest < Internal::Types::Model
         field :id, -> { String }, optional: false, nullable: false
       end
     end
