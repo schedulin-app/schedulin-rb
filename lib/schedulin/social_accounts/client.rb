@@ -127,6 +127,83 @@ module Schedulin
         end
       end
 
+      # List the text and announcement channels the Schedulin bot can post into for a connected Discord server. Use an
+      # item id as `platformConfiguration.channel` when creating a Discord post.
+      #
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
+      #
+      # @example
+      #   client.social_accounts.list_discord_channels(id: "id")
+      #
+      # @return [Schedulin::SocialAccounts::Types::ListDiscordChannelsSocialAccountsResponse]
+      def list_discord_channels(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "GET",
+          path: "v0/social-accounts/#{URI.encode_uri_component(params[:id].to_s)}/discord-channels",
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : Schedulin::SocialAccounts::Types::ListDiscordChannelsSocialAccountsResponse.load(response.body))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # List the channels in a connected Slack workspace that the Schedulin bot can post into (public channels, plus
+      # private channels it was invited to). Use an item id as `platformConfiguration.channel` when creating a Slack
+      # post.
+      #
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
+      #
+      # @example
+      #   client.social_accounts.list_slack_channels(id: "id")
+      #
+      # @return [Schedulin::SocialAccounts::Types::ListSlackChannelsSocialAccountsResponse]
+      def list_slack_channels(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "GET",
+          path: "v0/social-accounts/#{URI.encode_uri_component(params[:id].to_s)}/slack-channels",
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : Schedulin::SocialAccounts::Types::ListSlackChannelsSocialAccountsResponse.load(response.body))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
       # Update social media account settings and information
       #
       # @param request_options [Hash]

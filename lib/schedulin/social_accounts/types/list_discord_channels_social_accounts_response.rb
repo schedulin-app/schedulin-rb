@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+module Schedulin
+  module SocialAccounts
+    module Types
+      class ListDiscordChannelsSocialAccountsResponse < Internal::Types::Model
+        field :items, -> { Internal::Types::Array[Schedulin::SocialAccounts::Types::ListDiscordChannelsSocialAccountsResponseItemsItem] }, optional: false, nullable: false
+      end
+    end
+  end
+end
