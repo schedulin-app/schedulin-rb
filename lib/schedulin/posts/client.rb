@@ -195,8 +195,8 @@ module Schedulin
       # Mastodon only) replaces the post's thread with the same items create accepts — part media may also be a library
       # `{ id }`, so the `parts` array from `GET /v0/posts/{id}` round-trips — and an empty array removes the thread. On
       # X, parts[0] is the opening tweet: sending `parts` without `caption` sets the caption to parts[0], and changing
-      # `caption` without `parts` updates parts[0] when it matched the old caption. Posts that are already publishing,
-      # published, or failed can't be edited (409).
+      # `caption` or `media` without `parts` updates parts[0] when it matched the old value. Posts that are already
+      # publishing, published, or failed can't be edited (409).
       #
       # @param request_options [Hash]
       # @param params [Schedulin::Posts::Types::UpdatePostsRequest]
