@@ -1230,7 +1230,7 @@ client.social_accounts.update(id: "id")
 <dl>
 <dd>
 
-Remove a connected social media account
+Remove a connected social media account. This permanently deletes ALL of the account's posts (scheduled, drafts and published history) and cannot be undone. To keep history, reconnect the account instead of deleting it.
 </dd>
 </dl>
 </dd>
