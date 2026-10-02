@@ -127,8 +127,10 @@ module Schedulin
         end
       end
 
-      # List the text and announcement channels the Schedulin bot can post into for a connected Discord server. Use an
-      # item id as `platformConfiguration.channel` when creating a Discord post.
+      # List the text and announcement channels the Schedulin bot can post into for a connected Discord server — only
+      # channels where the bot's effective permissions (its roles plus the channel's permission overwrites) include View
+      # Channel and Send Messages; channels it can't post in are omitted. Use an item id as
+      # `platformConfiguration.channel` when creating a Discord post.
       #
       # @param request_options [Hash]
       # @param params [Hash]
@@ -246,8 +248,13 @@ module Schedulin
         end
       end
 
-      # Remove a connected social media account. This permanently deletes ALL of the account's posts (scheduled, drafts
-      # and published history) and cannot be undone. To keep history, reconnect the account instead of deleting it.
+      # Disconnect a social account. By default this is a soft disconnect: the stored credentials are wiped, the account
+      # stops counting toward your plan's account limit, and it stays in `GET /v0/social-accounts` with `status:
+      # "disconnected"` and `disconnectedReason: "TOKEN_REVOKED"` until it is reconnected from the dashboard. All of its
+      # posts, analytics, and history are kept; scheduled posts that come due while it is disconnected fail with a
+      # "reconnect" error instead of publishing. Pass `permanent=true` to delete the account instead — this
+      # **permanently deletes every post** (scheduled, draft, and published history) of the account and cannot be
+      # undone.
       #
       # @param request_options [Hash]
       # @param params [Schedulin::SocialAccounts::Types::DeleteSocialAccountsRequest]
@@ -257,6 +264,7 @@ module Schedulin
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
+      # @option params [Boolean, nil] :permanent
       #
       # @example
       #   client.social_accounts.delete(id: "id")
@@ -265,13 +273,17 @@ module Schedulin
       def delete(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         request_data = Schedulin::SocialAccounts::Types::DeleteSocialAccountsRequest.new(params).to_h
-        non_body_param_names = %w[id]
+        non_body_param_names = %w[id permanent]
         body = request_data.except(*non_body_param_names)
+
+        query_params = {}
+        query_params["permanent"] = params[:permanent] if params.key?(:permanent)
 
         request = Schedulin::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
           path: "v0/social-accounts/#{URI.encode_uri_component(params[:id].to_s)}",
+          query: query_params,
           body: body,
           request_options: request_options
         )

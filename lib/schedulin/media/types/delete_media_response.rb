@@ -6,7 +6,7 @@ module Schedulin
       class DeleteMediaResponse < Internal::Types::Model
         field :id, -> { String }, optional: false, nullable: false
 
-        field :deleted, -> { String }, optional: false, nullable: false
+        field :deleted, -> { Internal::Types::Boolean }, optional: false, nullable: false
       end
     end
   end

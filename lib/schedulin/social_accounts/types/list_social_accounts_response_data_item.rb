@@ -10,6 +10,8 @@ module Schedulin
 
         field :status, -> { Schedulin::SocialAccounts::Types::ListSocialAccountsResponseDataItemStatus }, optional: false, nullable: false
 
+        field :disconnected_reason, -> { Schedulin::Types::SocialAccountDisconnectedReason }, optional: false, nullable: true, api_name: "disconnectedReason"
+
         field :username, -> { String }, optional: false, nullable: true
 
         field :display_name, -> { String }, optional: false, nullable: true, api_name: "displayName"
