@@ -2,11 +2,12 @@
 
 module Schedulin
   module Types
-    module PostWithRelationsMediaItemTagsItemType
+    module WebhookDeliveryStatus
       extend Schedulin::Internal::Types::Enum
 
-      USER = "user"
-      BUSINESS = "business"
+      PENDING = "PENDING"
+      SUCCESS = "SUCCESS"
+      FAILED = "FAILED"
     end
   end
 end

@@ -263,7 +263,7 @@ client.posts.create(
 </dl>
 </details>
 
-<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">count_by_tab</a>() -> Object</code></summary>
+<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">count_by_tab</a>() -> Schedulin::Posts::Types::CountByTabPostsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1840,7 +1840,7 @@ client.tags.delete(id: "id")
 </details>
 
 ## Media
-<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">create_from_url</a>(request) -> Object</code></summary>
+<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">create_from_url</a>(request) -> Schedulin::Types::Media</code></summary>
 <dl>
 <dd>
 
@@ -1926,7 +1926,7 @@ client.media.create_from_url(url: "url")
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">create_upload_link</a>(request) -> Object</code></summary>
+<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">create_upload_link</a>(request) -> Schedulin::Media::Types::CreateUploadLinkMediaResponse</code></summary>
 <dl>
 <dd>
 
@@ -1988,7 +1988,7 @@ client.media.create_upload_link
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">upload</a>(request) -> Object</code></summary>
+<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">upload</a>(request) -> Schedulin::Types::Media</code></summary>
 <dl>
 <dd>
 
@@ -2131,10 +2131,7 @@ Update media information and metadata
 <dd>
 
 ```ruby
-client.media.update(
-  id: "id",
-  url: "url"
-)
+client.media.update(id: "id")
 ```
 </dd>
 </dl>
@@ -2217,7 +2214,7 @@ client.media.update(
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">delete</a>(id:, request) -> Object</code></summary>
+<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">delete</a>(id:, request) -> Schedulin::Media::Types::DeleteMediaResponse</code></summary>
 <dl>
 <dd>
 
@@ -2381,7 +2378,7 @@ client.media.list
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">set_tags</a>(media_id:, request) -> Object</code></summary>
+<details><summary><code>client.media.<a href="/lib/schedulin/media/client.rb">set_tags</a>(media_id:, request) -> Schedulin::Media::Types::SetTagsMediaResponse</code></summary>
 <dl>
 <dd>
 
@@ -2653,7 +2650,7 @@ client.platforms.list
 </details>
 
 ## Ai
-<details><summary><code>client.ai.<a href="/lib/schedulin/ai/client.rb">generate_image</a>(request) -> Object</code></summary>
+<details><summary><code>client.ai.<a href="/lib/schedulin/ai/client.rb">generate_image</a>(request) -> Schedulin::Ai::Types::GenerateImageAiResponse</code></summary>
 <dl>
 <dd>
 
@@ -2739,7 +2736,7 @@ client.ai.generate_image(prompt: "prompt")
 </dl>
 </details>
 
-<details><summary><code>client.ai.<a href="/lib/schedulin/ai/client.rb">get_generation</a>() -> Object</code></summary>
+<details><summary><code>client.ai.<a href="/lib/schedulin/ai/client.rb">get_generation</a>() -> Schedulin::Types::AiGeneration</code></summary>
 <dl>
 <dd>
 
@@ -2802,7 +2799,7 @@ client.ai.get_generation(id: "id")
 </details>
 
 ## Webhooks
-<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">list</a>() -> Object</code></summary>
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">list</a>() -> Schedulin::Webhooks::Types::ListWebhooksResponse</code></summary>
 <dl>
 <dd>
 
@@ -2856,7 +2853,7 @@ client.webhooks.list
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">create</a>(request) -> Object</code></summary>
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">create</a>(request) -> Schedulin::Types::WebhookEndpoint</code></summary>
 <dl>
 <dd>
 
@@ -2937,7 +2934,7 @@ client.webhooks.create(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">retrieve</a>(id:) -> Object</code></summary>
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">retrieve</a>(id:) -> Schedulin::Types::WebhookEndpoint</code></summary>
 <dl>
 <dd>
 
@@ -2999,7 +2996,7 @@ client.webhooks.retrieve(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">delete</a>(id:, request) -> Object</code></summary>
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">delete</a>(id:, request) -> Schedulin::Webhooks::Types::DeleteWebhooksResponse</code></summary>
 <dl>
 <dd>
 
@@ -3061,7 +3058,7 @@ client.webhooks.delete(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">update</a>(id:, request) -> Object</code></summary>
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">update</a>(id:, request) -> Schedulin::Types::WebhookEndpoint</code></summary>
 <dl>
 <dd>
 
@@ -3155,7 +3152,7 @@ client.webhooks.update(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">rotate_secret</a>(id:, request) -> Object</code></summary>
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">rotate_secret</a>(id:, request) -> Schedulin::Types::WebhookEndpoint</code></summary>
 <dl>
 <dd>
 
@@ -3217,7 +3214,7 @@ client.webhooks.rotate_secret(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">test</a>(id:, request) -> Object</code></summary>
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">test</a>(id:, request) -> Schedulin::Webhooks::Types::TestWebhooksResponse</code></summary>
 <dl>
 <dd>
 
@@ -3279,7 +3276,7 @@ client.webhooks.test(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">list_deliveries</a>(id:) -> Object</code></summary>
+<details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">list_deliveries</a>(id:) -> Schedulin::Webhooks::Types::ListDeliveriesWebhooksResponse</code></summary>
 <dl>
 <dd>
 

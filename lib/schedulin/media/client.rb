@@ -26,7 +26,7 @@ module Schedulin
       # @example
       #   client.media.create_from_url(url: "url")
       #
-      # @return [Object]
+      # @return [Schedulin::Types::Media]
       def create_from_url(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         request = Schedulin::Internal::JSON::Request.new(
@@ -43,7 +43,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          (response.body.to_s.empty? ? nil : Schedulin::Types::Media.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -66,7 +66,7 @@ module Schedulin
       # @example
       #   client.media.create_upload_link
       #
-      # @return [Object]
+      # @return [Schedulin::Media::Types::CreateUploadLinkMediaResponse]
       def create_upload_link(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         request = Schedulin::Internal::JSON::Request.new(
@@ -83,7 +83,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          (response.body.to_s.empty? ? nil : Schedulin::Media::Types::CreateUploadLinkMediaResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -107,7 +107,7 @@ module Schedulin
       # @example
       #   client.media.upload
       #
-      # @return [Object]
+      # @return [Schedulin::Types::Media]
       def upload(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
@@ -151,7 +151,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          (response.body.to_s.empty? ? nil : Schedulin::Types::Media.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -172,7 +172,7 @@ module Schedulin
       # @example
       #   client.media.retrieve(id: "id")
       #
-      # @return [Schedulin::Types::Media, nil]
+      # @return [Schedulin::Types::Media]
       def retrieve(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         request = Schedulin::Internal::JSON::Request.new(
@@ -207,10 +207,7 @@ module Schedulin
       # @option params [String] :id
       #
       # @example
-      #   client.media.update(
-      #     id: "id",
-      #     url: "url"
-      #   )
+      #   client.media.update(id: "id")
       #
       # @return [Schedulin::Types::Media]
       def update(request_options: {}, **params)
@@ -255,7 +252,7 @@ module Schedulin
       # @example
       #   client.media.delete(id: "id")
       #
-      # @return [Object]
+      # @return [Schedulin::Media::Types::DeleteMediaResponse]
       def delete(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         request_data = Schedulin::Media::Types::DeleteMediaRequest.new(params).to_h
@@ -276,7 +273,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          (response.body.to_s.empty? ? nil : Schedulin::Media::Types::DeleteMediaResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -351,7 +348,7 @@ module Schedulin
       #     tag_ids: ["tagIds"]
       #   )
       #
-      # @return [Object]
+      # @return [Schedulin::Media::Types::SetTagsMediaResponse]
       def set_tags(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         request_data = Schedulin::Media::Types::SetTagsMediaRequest.new(params).to_h
@@ -372,7 +369,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          (response.body.to_s.empty? ? nil : Schedulin::Media::Types::SetTagsMediaResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

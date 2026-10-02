@@ -31,6 +31,12 @@ module Schedulin
 
       field :url, -> { String }, optional: false, nullable: true
 
+      field :title, -> { String }, optional: false, nullable: true
+
+      field :posted_at, -> { String }, optional: false, nullable: true, api_name: "postedAt"
+
+      field :error_message, -> { String }, optional: false, nullable: true, api_name: "errorMessage"
+
       field :created_at, -> { String }, optional: false, nullable: false, api_name: "createdAt"
 
       field :updated_at, -> { String }, optional: false, nullable: false, api_name: "updatedAt"

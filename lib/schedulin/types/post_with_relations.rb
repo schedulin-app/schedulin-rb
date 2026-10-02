@@ -31,13 +31,21 @@ module Schedulin
 
       field :url, -> { String }, optional: false, nullable: true
 
+      field :title, -> { String }, optional: false, nullable: true
+
+      field :posted_at, -> { String }, optional: false, nullable: true, api_name: "postedAt"
+
+      field :error_message, -> { String }, optional: false, nullable: true, api_name: "errorMessage"
+
       field :created_at, -> { String }, optional: false, nullable: false, api_name: "createdAt"
 
       field :updated_at, -> { String }, optional: false, nullable: false, api_name: "updatedAt"
 
       field :social_account, -> { Schedulin::Types::SocialAccount }, optional: false, nullable: false, api_name: "socialAccount"
 
-      field :media, -> { Internal::Types::Array[Schedulin::Types::PostWithRelationsMediaItem] }, optional: false, nullable: false
+      field :media, -> { Internal::Types::Array[Schedulin::Types::PostMedia] }, optional: false, nullable: false
+
+      field :thumbnail, -> { Schedulin::Types::PostMedia }, optional: false, nullable: true
 
       field :tags, -> { Internal::Types::Array[Schedulin::Types::Tag] }, optional: false, nullable: false
     end

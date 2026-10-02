@@ -5,7 +5,7 @@ module Schedulin
     class MediaUpdate < Internal::Types::Model
       field :id, -> { String }, optional: false, nullable: false
 
-      field :url, -> { String }, optional: false, nullable: false
+      field :url, -> { String }, optional: true, nullable: false
 
       field :mime_type, -> { String }, optional: true, nullable: false, api_name: "mimeType"
 

@@ -23,7 +23,7 @@ module Schedulin
       # @example
       #   client.webhooks.list
       #
-      # @return [Object]
+      # @return [Schedulin::Webhooks::Types::ListWebhooksResponse]
       def list(request_options: {}, **_params)
         request = Schedulin::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -38,7 +38,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          (response.body.to_s.empty? ? nil : Schedulin::Webhooks::Types::ListWebhooksResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -62,7 +62,7 @@ module Schedulin
       #     events: ["post.published"]
       #   )
       #
-      # @return [Object]
+      # @return [Schedulin::Types::WebhookEndpoint]
       def create(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         request = Schedulin::Internal::JSON::Request.new(
@@ -79,7 +79,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          (response.body.to_s.empty? ? nil : Schedulin::Types::WebhookEndpoint.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -100,7 +100,7 @@ module Schedulin
       # @example
       #   client.webhooks.retrieve(id: "id")
       #
-      # @return [Object]
+      # @return [Schedulin::Types::WebhookEndpoint]
       def retrieve(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         request = Schedulin::Internal::JSON::Request.new(
@@ -116,7 +116,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          (response.body.to_s.empty? ? nil : Schedulin::Types::WebhookEndpoint.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -137,7 +137,7 @@ module Schedulin
       # @example
       #   client.webhooks.delete(id: "id")
       #
-      # @return [Object]
+      # @return [Schedulin::Webhooks::Types::DeleteWebhooksResponse]
       def delete(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         request_data = Schedulin::Webhooks::Types::DeleteWebhooksRequest.new(params).to_h
@@ -158,7 +158,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          (response.body.to_s.empty? ? nil : Schedulin::Webhooks::Types::DeleteWebhooksResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -179,7 +179,7 @@ module Schedulin
       # @example
       #   client.webhooks.update(id: "id")
       #
-      # @return [Object]
+      # @return [Schedulin::Types::WebhookEndpoint]
       def update(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         request_data = Schedulin::Webhooks::Types::UpdateWebhooksRequest.new(params).to_h
@@ -200,7 +200,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          (response.body.to_s.empty? ? nil : Schedulin::Types::WebhookEndpoint.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -221,7 +221,7 @@ module Schedulin
       # @example
       #   client.webhooks.rotate_secret(id: "id")
       #
-      # @return [Object]
+      # @return [Schedulin::Types::WebhookEndpoint]
       def rotate_secret(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         request_data = Schedulin::Webhooks::Types::RotateSecretWebhooksRequest.new(params).to_h
@@ -242,7 +242,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          (response.body.to_s.empty? ? nil : Schedulin::Types::WebhookEndpoint.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -263,7 +263,7 @@ module Schedulin
       # @example
       #   client.webhooks.test(id: "id")
       #
-      # @return [Object]
+      # @return [Schedulin::Webhooks::Types::TestWebhooksResponse]
       def test(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         request_data = Schedulin::Webhooks::Types::TestWebhooksRequest.new(params).to_h
@@ -284,7 +284,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          (response.body.to_s.empty? ? nil : Schedulin::Webhooks::Types::TestWebhooksResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -307,7 +307,7 @@ module Schedulin
       # @example
       #   client.webhooks.list_deliveries(id: "id")
       #
-      # @return [Object]
+      # @return [Schedulin::Webhooks::Types::ListDeliveriesWebhooksResponse]
       def list_deliveries(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
@@ -328,7 +328,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          (response.body.to_s.empty? ? nil : Schedulin::Webhooks::Types::ListDeliveriesWebhooksResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

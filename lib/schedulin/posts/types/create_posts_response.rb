@@ -18,6 +18,8 @@ module Schedulin
 
         field :media, -> { Internal::Types::Array[Schedulin::Posts::Types::CreatePostsResponseMediaItem] }, optional: false, nullable: false
 
+        field :social_account_id, -> { String }, optional: false, nullable: false, api_name: "socialAccountId"
+
         field :social_accounts, -> { Internal::Types::Array[Schedulin::Types::SocialAccountPublic] }, optional: false, nullable: false, api_name: "socialAccounts"
 
         field :created_at, -> { String }, optional: false, nullable: false, api_name: "createdAt"

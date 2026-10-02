@@ -23,7 +23,7 @@ module Schedulin
       # @example
       #   client.ai.generate_image(prompt: "prompt")
       #
-      # @return [Object]
+      # @return [Schedulin::Ai::Types::GenerateImageAiResponse]
       def generate_image(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         request = Schedulin::Internal::JSON::Request.new(
@@ -40,7 +40,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          (response.body.to_s.empty? ? nil : Schedulin::Ai::Types::GenerateImageAiResponse.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -61,7 +61,7 @@ module Schedulin
       # @example
       #   client.ai.get_generation(id: "id")
       #
-      # @return [Object]
+      # @return [Schedulin::Types::AiGeneration]
       def get_generation(request_options: {}, **params)
         params = Schedulin::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
@@ -81,7 +81,7 @@ module Schedulin
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
+          (response.body.to_s.empty? ? nil : Schedulin::Types::AiGeneration.load(response.body))
         else
           error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
