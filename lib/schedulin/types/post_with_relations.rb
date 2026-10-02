@@ -48,6 +48,8 @@ module Schedulin
       field :thumbnail, -> { Schedulin::Types::PostMedia }, optional: false, nullable: true
 
       field :tags, -> { Internal::Types::Array[Schedulin::Types::Tag] }, optional: false, nullable: false
+
+      field :parts, -> { Internal::Types::Array[Schedulin::Types::PostThreadPart] }, optional: false, nullable: false
     end
   end
 end

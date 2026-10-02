@@ -17,6 +17,8 @@ module Schedulin
         field :status, -> { Schedulin::Posts::Types::UpdatePostsRequestStatus }, optional: true, nullable: false
 
         field :tag_ids, -> { Internal::Types::Array[String] }, optional: true, nullable: false, api_name: "tagIds"
+
+        field :parts, -> { Internal::Types::Array[Schedulin::Posts::Types::UpdatePostsRequestPartsItem] }, optional: true, nullable: false
       end
     end
   end
