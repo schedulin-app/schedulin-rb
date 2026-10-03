@@ -50,6 +50,47 @@ module Schedulin
         end
       end
 
+      # Adds a file you uploaded with POST /v0/media/presign (intent `post`) + HTTP PUT to the media library in place —
+      # no second copy is stored — and returns the media record. Pass the presign `key`. The object's type and size are
+      # read from storage and must be an allowed image/video/audio type within the post upload limit (250 MB).
+      # Idempotent: registering the same key again returns the existing record. Returns 404 when no uploaded object
+      # exists for the key in your workspace.
+      #
+      # @param request_options [Hash]
+      # @param params [Schedulin::Media::Types::MediaRegister]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @example
+      #   client.media.register(key: "key")
+      #
+      # @return [Schedulin::Types::Media]
+      def register(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "v0/media/register",
+          body: Schedulin::Media::Types::MediaRegister.new(params).to_h,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : Schedulin::Types::Media.load(response.body))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
       # Returns a short-lived URL to a page where the user uploads files from their device (or a pasted attachment)
       # straight into the media library. Hand the URL to the user; once they've uploaded, call GET /v0/media (list
       # media, newest first) and reference the returned `url` when creating a post. Use this whenever the file isn't
