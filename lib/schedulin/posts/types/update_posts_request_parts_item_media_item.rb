@@ -22,6 +22,8 @@ module Schedulin
 
         field :alt, -> { String }, optional: true, nullable: false
 
+        field :tags, -> { Internal::Types::Array[Schedulin::Posts::Types::UpdatePostsRequestPartsItemMediaItemTagsItem] }, optional: true, nullable: false
+
         field :bucket, -> { String }, optional: true, nullable: false
 
         field :key, -> { String }, optional: true, nullable: false
