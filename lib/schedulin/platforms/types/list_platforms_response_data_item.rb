@@ -12,6 +12,10 @@ module Schedulin
 
         field :caption_max_length, -> { Integer }, optional: true, nullable: false, api_name: "captionMaxLength"
 
+        field :caption_length_unit, -> { Schedulin::Platforms::Types::ListPlatformsResponseDataItemCaptionLengthUnit }, optional: true, nullable: false, api_name: "captionLengthUnit"
+
+        field :caption_max_length_with_media, -> { Integer }, optional: true, nullable: false, api_name: "captionMaxLengthWithMedia"
+
         field :media_rules, -> { Schedulin::Platforms::Types::ListPlatformsResponseDataItemMediaRules }, optional: true, nullable: false, api_name: "mediaRules"
 
         field :platform_configuration, -> { Schedulin::Platforms::Types::ListPlatformsResponseDataItemPlatformConfiguration }, optional: false, nullable: false, api_name: "platformConfiguration"
