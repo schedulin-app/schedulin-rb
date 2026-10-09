@@ -8,6 +8,8 @@ module Schedulin
 
         field :caption, -> { String }, optional: true, nullable: false
 
+        field :title, -> { String }, optional: true, nullable: false
+
         field :scheduled_at, -> { String }, optional: true, nullable: false, api_name: "scheduledAt"
 
         field :media, -> { Internal::Types::Array[Schedulin::Posts::Types::UpdatePostsRequestMediaItem] }, optional: true, nullable: false
