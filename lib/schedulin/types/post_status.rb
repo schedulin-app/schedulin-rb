@@ -10,6 +10,7 @@ module Schedulin
       COMPLETED = "COMPLETED"
       DRAFT = "DRAFT"
       FAILED = "FAILED"
+      DELETED = "DELETED"
     end
   end
 end
