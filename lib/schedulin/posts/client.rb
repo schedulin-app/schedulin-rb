@@ -403,6 +403,50 @@ module Schedulin
         end
       end
 
+      # Re-queue a FAILED post for publishing, immediately or at a future scheduledAt. Refuses posts that were already
+      # published. If the last attempt's outcome is unknown (it may have posted), responds 412 until called again with
+      # force: true — check the platform first.
+      #
+      # @param request_options [Hash]
+      # @param params [Schedulin::Posts::Types::RetryPostsRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
+      #
+      # @example
+      #   client.posts.retry_(id: "id")
+      #
+      # @return [Schedulin::Types::Post]
+      def retry_(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request_data = Schedulin::Posts::Types::RetryPostsRequest.new(params).to_h
+        non_body_param_names = %w[id]
+        body = request_data.except(*non_body_param_names)
+
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
+          path: "v0/posts/#{URI.encode_uri_component(params[:id].to_s)}/retry",
+          body: body,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : Schedulin::Types::Post.load(response.body))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
       # Replace all tags on a post. No status restrictions apply.
       #
       # @param request_options [Hash]

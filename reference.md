@@ -777,6 +777,84 @@ client.posts.publish_draft(id: "id")
 </dl>
 </details>
 
+<details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">retry_</a>(id:, request) -> Schedulin::Types::Post</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Re-queue a FAILED post for publishing, immediately or at a future scheduledAt. Refuses posts that were already published. If the last attempt's outcome is unknown (it may have posted), responds 412 until called again with force: true — check the platform first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.posts.retry_(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force:** `Internal::Types::Boolean` — Confirm the retry after a publish attempt whose outcome is unknown. Check the platform first — the post may already be live.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scheduled_at:** `String` — Future time to re-schedule the post for; omit to publish immediately.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Posts::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.posts.<a href="/lib/schedulin/posts/client.rb">update_tags</a>(id:, request) -> Schedulin::Types::Post</code></summary>
 <dl>
 <dd>
