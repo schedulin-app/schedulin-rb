@@ -9,6 +9,7 @@ module Schedulin
       POST_FAILED = "post.failed"
       GENERATION_COMPLETED = "generation.completed"
       GENERATION_FAILED = "generation.failed"
+      SOCIAL_ACCOUNT_CONNECTED = "social_account.connected"
     end
   end
 end
