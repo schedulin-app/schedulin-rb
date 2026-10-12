@@ -971,6 +971,14 @@ client.social_accounts.list
 <dl>
 <dd>
 
+**profile_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `Schedulin::SocialAccounts::RequestOptions` 
     
 </dd>
@@ -1293,6 +1301,14 @@ client.social_accounts.update(id: "id")
 <dd>
 
 **status:** `Schedulin::SocialAccounts::Types::UpdateSocialAccountsRequestStatus` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**profile_id:** `String` — Move the account into a client profile (profile id or externalId), or null to remove it from its profile. Pro plan.
     
 </dd>
 </dl>
@@ -3523,6 +3539,419 @@ client.webhooks.list_deliveries(id: "id")
 <dd>
 
 **request_options:** `Schedulin::Webhooks::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Profiles
+<details><summary><code>client.profiles.<a href="/lib/schedulin/profiles/client.rb">list</a>() -> Internal::Types::Array[Schedulin::Types::ClientProfile]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the client profiles in your organization, each with the social accounts connected to it.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.profiles.list
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Profiles::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.profiles.<a href="/lib/schedulin/profiles/client.rb">create</a>(request) -> Schedulin::Types::ClientProfile</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a profile for one of your clients. Their social accounts are grouped under it so you can post on their behalf. Requires the Pro plan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.profiles.create(name: "name")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `String` — Your own identifier for this client (e.g. the user id in your system). Unique per organization; usable in place of the profile id.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Profiles::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.profiles.<a href="/lib/schedulin/profiles/client.rb">retrieve</a>(id:) -> Schedulin::Types::ClientProfile</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a client profile by its id or by the externalId you assigned, with its connected social accounts.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.profiles.retrieve(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Profiles::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.profiles.<a href="/lib/schedulin/profiles/client.rb">delete</a>(id:, request) -> Schedulin::Profiles::Types::DeleteProfilesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a client profile. Its social accounts stay connected to your organization; they are just no longer grouped under the profile.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.profiles.delete(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Profiles::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.profiles.<a href="/lib/schedulin/profiles/client.rb">update</a>(id:, request) -> Schedulin::Types::ClientProfile</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rename a client profile or change its externalId. Requires the Pro plan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.profiles.update(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `String` — Your own identifier for this client (e.g. the user id in your system). Unique per organization; usable in place of the profile id.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Profiles::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.profiles.<a href="/lib/schedulin/profiles/client.rb">create_connect_link</a>(id:, request) -> Schedulin::Profiles::Types::CreateConnectLinkProfilesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a hosted link to send your client. They open it, sign in to their social platforms (no Schedulin account needed), and the accounts connect to your organization under this profile, ready to post to via the API. Links expire; create a new one any time. Requires the Pro plan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.profiles.create_connect_link(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**platforms:** `Internal::Types::Array[String]` — Platform slugs the client may connect (e.g. instagram, tiktok). Omit to offer every platform.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expires_in_hours:** `Integer` — How long the link works. Defaults to 72 hours, max 7 days.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**redirect_url:** `String` — Where the client's Done button takes them after connecting, e.g. back to your app.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Profiles::RequestOptions` 
     
 </dd>
 </dl>

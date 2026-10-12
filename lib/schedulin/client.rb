@@ -52,5 +52,10 @@ module Schedulin
     def webhooks
       @webhooks ||= Schedulin::Webhooks::Client.new(client: @raw_client)
     end
+
+    # @return [Schedulin::Profiles::Client]
+    def profiles
+      @profiles ||= Schedulin::Profiles::Client.new(client: @raw_client)
+    end
   end
 end

@@ -13,22 +13,28 @@ module Schedulin
       # Retrieve all connected social media accounts for the authenticated user
       #
       # @param request_options [Hash]
-      # @param _params [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String, nil] :profile_id
       #
       # @example
       #   client.social_accounts.list
       #
       # @return [Schedulin::SocialAccounts::Types::ListSocialAccountsResponse]
-      def list(request_options: {}, **_params)
+      def list(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        query_params = {}
+        query_params["profileId"] = params[:profile_id] if params.key?(:profile_id)
+
         request = Schedulin::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "v0/social-accounts",
+          query: query_params,
           request_options: request_options
         )
         begin
