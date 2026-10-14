@@ -399,6 +399,96 @@ module Schedulin
         end
       end
 
+      # Return the weekly posting schedule that `action: "queue"` fills: each slot's weekday (0 = Sunday), wall-clock
+      # `time` (HH:MM) and `capacity`, interpreted in the account's `timezone`. Empty `times` means the account has no
+      # queue configured.
+      #
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
+      #
+      # @example
+      #   client.social_accounts.get_queue_schedule(id: "id")
+      #
+      # @return [Schedulin::SocialAccounts::Types::GetQueueScheduleSocialAccountsResponse]
+      def get_queue_schedule(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "GET",
+          path: "v0/social-accounts/#{URI.encode_uri_component(params[:id].to_s)}/queue-schedule",
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : Schedulin::SocialAccounts::Types::GetQueueScheduleSocialAccountsResponse.load(response.body))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
+      # Replace the account's whole weekly posting schedule with `times` (send an empty array to clear it). Times are
+      # wall-clock HH:MM in the account's timezone — change that with `PUT /v0/social-accounts/{id}/timezone`. Posts
+      # already scheduled keep their times; only future `action: "queue"` placements use the new schedule. Returns the
+      # saved schedule.
+      #
+      # @param request_options [Hash]
+      # @param params [Schedulin::SocialAccounts::Types::ReplaceQueueScheduleSocialAccountsRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
+      #
+      # @example
+      #   client.social_accounts.replace_queue_schedule(
+      #     id: "id",
+      #     times: [{
+      #       weekday: 1,
+      #       time: "time"
+      #     }]
+      #   )
+      #
+      # @return [Schedulin::SocialAccounts::Types::ReplaceQueueScheduleSocialAccountsResponse]
+      def replace_queue_schedule(request_options: {}, **params)
+        params = Schedulin::Internal::Types::Utils.normalize_keys(params)
+        request_data = Schedulin::SocialAccounts::Types::ReplaceQueueScheduleSocialAccountsRequest.new(params).to_h
+        non_body_param_names = %w[id]
+        body = request_data.except(*non_body_param_names)
+
+        request = Schedulin::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "PUT",
+          path: "v0/social-accounts/#{URI.encode_uri_component(params[:id].to_s)}/queue-schedule",
+          body: body,
+          request_options: request_options
+        )
+        begin
+          response = @client.send(request)
+        rescue Net::HTTPRequestTimeout
+          raise Schedulin::Errors::TimeoutError
+        end
+        code = response.code.to_i
+        if code.between?(200, 299)
+          (response.body.to_s.empty? ? nil : Schedulin::SocialAccounts::Types::ReplaceQueueScheduleSocialAccountsResponse.load(response.body))
+        else
+          error_class = Schedulin::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
+        end
+      end
+
       # List the boards for a connected Pinterest account. Use a board id in `platformConfiguration.board_ids` when
       # creating a Pinterest post.
       #
