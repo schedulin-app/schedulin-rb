@@ -58,6 +58,11 @@ module Schedulin
       @profiles ||= Schedulin::Profiles::Client.new(client: @raw_client)
     end
 
+    # @return [Schedulin::Ideas::Client]
+    def ideas
+      @ideas ||= Schedulin::Ideas::Client.new(client: @raw_client)
+    end
+
     # @return [Schedulin::Workspace::Client]
     def workspace
       @workspace ||= Schedulin::Workspace::Client.new(client: @raw_client)
