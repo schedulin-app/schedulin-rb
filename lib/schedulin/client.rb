@@ -57,5 +57,10 @@ module Schedulin
     def profiles
       @profiles ||= Schedulin::Profiles::Client.new(client: @raw_client)
     end
+
+    # @return [Schedulin::Analytics::Client]
+    def analytics
+      @analytics ||= Schedulin::Analytics::Client.new(client: @raw_client)
+    end
   end
 end
