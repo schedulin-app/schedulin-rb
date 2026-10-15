@@ -23,6 +23,11 @@ module Schedulin
       @posts ||= Schedulin::Posts::Client.new(client: @raw_client)
     end
 
+    # @return [Schedulin::PostGroups::Client]
+    def post_groups
+      @post_groups ||= Schedulin::PostGroups::Client.new(client: @raw_client)
+    end
+
     # @return [Schedulin::SocialAccounts::Client]
     def social_accounts
       @social_accounts ||= Schedulin::SocialAccounts::Client.new(client: @raw_client)

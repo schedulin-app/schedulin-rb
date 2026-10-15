@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Schedulin
-  module Posts
+  module PostGroups
     module Types
-      module PostCreateMediaItemTagsItemType
+      module CreatePostGroupsResponsePostsItemMediaItemTagsItemType
         extend Schedulin::Internal::Types::Enum
 
         USER = "user"

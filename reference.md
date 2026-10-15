@@ -171,79 +171,7 @@ client.posts.create(
 <dl>
 <dd>
 
-**caption:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scheduled_at:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**social_account_id:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**media:** `Internal::Types::Array[Schedulin::Posts::Types::PostCreateMediaItem]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**thumbnail:** `Schedulin::Posts::Types::PostCreateThumbnail` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**platform_configuration:** `Internal::Types::Hash[String, Object]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tag_ids:** `Internal::Types::Array[String]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**action:** `Schedulin::Posts::Types::PostCreateAction` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**parts:** `Internal::Types::Array[Schedulin::Posts::Types::PostCreatePartsItem]` 
+**request:** `Schedulin::Types::PostCreate` 
     
 </dd>
 </dl>
@@ -917,6 +845,80 @@ client.posts.update_tags(
 <dd>
 
 **request_options:** `Schedulin::Posts::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## PostGroups
+<details><summary><code>client.post_groups.<a href="/lib/schedulin/post_groups/client.rb">create</a>(request) -> Schedulin::PostGroups::Types::CreatePostGroupsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create posts for several social accounts in one request — for example the same caption and image sent to Instagram, Threads and Facebook. Each post is validated exactly like `POST /v0/posts` (including per-platform rules), and media may reference stored library URLs or publicly reachable URLs; an external URL shared by several posts is imported once. The request is atomic: if any post is invalid, nothing is created. Posts with `action: "queue"` on the same account take consecutive queue slots. Up to 50 posts per request.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.post_groups.create(posts: [{
+  caption: "caption",
+  social_account_id: "socialAccountId"
+}])
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**title:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**posts:** `Internal::Types::Array[Schedulin::Types::PostCreate]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::PostGroups::RequestOptions` 
     
 </dd>
 </dl>

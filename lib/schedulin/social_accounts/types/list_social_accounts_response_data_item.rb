@@ -26,6 +26,8 @@ module Schedulin
 
         field :profile_id, -> { String }, optional: false, nullable: true, api_name: "profileId"
 
+        field :connected_via, -> { Schedulin::SocialAccounts::Types::ListSocialAccountsResponseDataItemConnectedVia }, optional: false, nullable: true, api_name: "connectedVia"
+
         field :created_at, -> { String }, optional: false, nullable: false, api_name: "createdAt"
 
         field :updated_at, -> { String }, optional: false, nullable: false, api_name: "updatedAt"

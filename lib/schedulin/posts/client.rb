@@ -72,7 +72,7 @@ module Schedulin
       # clients that cannot issue a raw presigned PUT can attach media in one call.
       #
       # @param request_options [Hash]
-      # @param params [Schedulin::Posts::Types::PostCreate]
+      # @param params [Schedulin::Types::PostCreate]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -92,7 +92,7 @@ module Schedulin
           base_url: request_options[:base_url],
           method: "POST",
           path: "v0/posts",
-          body: Schedulin::Posts::Types::PostCreate.new(params).to_h,
+          body: Schedulin::Types::PostCreate.new(params).to_h,
           request_options: request_options
         )
         begin
