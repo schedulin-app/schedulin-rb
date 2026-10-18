@@ -16,6 +16,8 @@ module Schedulin
 
         field :display_name, -> { String }, optional: false, nullable: true, api_name: "displayName"
 
+        field :handle, -> { String }, optional: false, nullable: true
+
         field :profile_image_url, -> { String }, optional: false, nullable: true, api_name: "profileImageUrl"
 
         field :refresh_token_valid, -> { Internal::Types::Boolean }, optional: false, nullable: false, api_name: "refreshTokenValid"
