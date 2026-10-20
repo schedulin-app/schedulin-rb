@@ -16,6 +16,7 @@ module Schedulin
         SNAPCHAT = "snapchat"
         THREADS = "threads"
         TIKTOK = "tiktok"
+        TIKTOK_BUSINESS = "tiktok_business"
         TWITTER = "twitter"
         YOUTUBE = "youtube"
         MASTODON = "mastodon"
