@@ -111,6 +111,7 @@ require_relative "schedulin/social_accounts/types/tiktok_creator_info_social_acc
 require_relative "schedulin/social_accounts/types/tiktok_creator_info_social_accounts_response_data"
 require_relative "schedulin/social_accounts/types/tiktok_creator_info_social_accounts_response"
 require_relative "schedulin/tags/types/list_tags_response"
+require_relative "schedulin/media/types/create_from_url_media_request_fit_to_platforms_item"
 require_relative "schedulin/media/types/create_upload_link_media_response"
 require_relative "schedulin/media/types/delete_media_response"
 require_relative "schedulin/media/types/list_media_request_type"

@@ -11,6 +11,8 @@ module Schedulin
         field :alt, -> { String }, optional: true, nullable: false
 
         field :content_type, -> { String }, optional: true, nullable: false, api_name: "contentType"
+
+        field :fit_to_platforms, -> { Internal::Types::Array[Schedulin::Media::Types::CreateFromURLMediaRequestFitToPlatformsItem] }, optional: true, nullable: false, api_name: "fitToPlatforms"
       end
     end
   end
