@@ -7,7 +7,6 @@ module Schedulin
         extend Schedulin::Internal::Types::Enum
 
         POST = "post"
-        CLIP_SOURCE = "clip-source"
         PUBLIC_ASSET = "public-asset"
       end
     end
