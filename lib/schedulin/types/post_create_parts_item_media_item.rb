@@ -26,6 +26,8 @@ module Schedulin
       field :size, -> { Integer }, optional: true, nullable: false
 
       field :duration, -> { Integer }, optional: true, nullable: false
+
+      field :caption, -> { String }, optional: true, nullable: false
     end
   end
 end
