@@ -53,6 +53,11 @@ module Schedulin
       @ai ||= Schedulin::Ai::Client.new(client: @raw_client)
     end
 
+    # @return [Schedulin::Ugc::Client]
+    def ugc
+      @ugc ||= Schedulin::Ugc::Client.new(client: @raw_client)
+    end
+
     # @return [Schedulin::Webhooks::Client]
     def webhooks
       @webhooks ||= Schedulin::Webhooks::Client.new(client: @raw_client)

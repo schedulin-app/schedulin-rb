@@ -3142,6 +3142,417 @@ client.ai.get_generation(id: "id")
 </dl>
 </details>
 
+## Ugc
+<details><summary><code>client.ugc.<a href="/lib/schedulin/ugc/client.rb">create_video</a>(request) -> Schedulin::Ugc::Types::CreateVideoUgcResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create an AI UGC (talking-actor) video from a brief and start rendering it. Reserves AI credits up front; poll getProject until COMPLETED or FAILED
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.ugc.create_video(product_name: "productName")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**title:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**product_name:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**audience:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**hook_goal:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**hook:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cta:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**website_url:** `Schedulin::Ugc::Types::CreateVideoUgcRequestWebsiteURL` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**notes:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**actor_setting:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**voice_id:** `Schedulin::Ugc::Types::CreateVideoUgcRequestVoiceID` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resolution:** `Schedulin::Ugc::Types::CreateVideoUgcRequestResolution` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**length_seconds:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**story_intro:** `Internal::Types::Boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**story_opening:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_product:** `Internal::Types::Boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**product_screenshot:** `Schedulin::Ugc::Types::CreateVideoUgcRequestProductScreenshot` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avatar_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Ugc::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ugc.<a href="/lib/schedulin/ugc/client.rb">get_video</a>() -> Schedulin::Ugc::Types::GetVideoUgcResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get an AI UGC video's status, with signed URLs for the final video and poster once COMPLETED. Pass waitSeconds (max 45) to wait for it to finish before responding
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.ugc.get_video(id: "id")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**wait_seconds:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Ugc::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ugc.<a href="/lib/schedulin/ugc/client.rb">add_to_media_library</a>(request) -> Schedulin::Ugc::Types::AddToMediaLibraryUgcResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Copy a COMPLETED UGC video into the media library and return its permanent URL, ready to attach to a post. Idempotent: repeat calls return the same media
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.ugc.add_to_media_library(project_id: "projectId")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Ugc::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ugc.<a href="/lib/schedulin/ugc/client.rb">list_avatars</a>() -> Schedulin::Ugc::Types::ListAvatarsUgcResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.ugc.list_avatars
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**per_page:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort:** `Schedulin::Ugc::Types::ListAvatarsUgcRequestSortItem` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Schedulin::Ugc::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Webhooks
 <details><summary><code>client.webhooks.<a href="/lib/schedulin/webhooks/client.rb">list</a>() -> Schedulin::Webhooks::Types::ListWebhooksResponse</code></summary>
 <dl>
