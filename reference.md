@@ -2861,7 +2861,7 @@ client.media.count_by_tag
 <dl>
 <dd>
 
-Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post. Pass `size` (bytes): the URL then only accepts an upload of exactly that size, and sizes over the upload limit are rejected up front.
+Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post. The server picks the `key` (a unique id under your workspace), so always use the one this returns. Pass `size` (bytes): the URL then only accepts an upload of exactly that size, and sizes over the upload limit are rejected up front.
 </dd>
 </dl>
 </dd>
@@ -2876,10 +2876,7 @@ Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes
 <dd>
 
 ```ruby
-client.media.create_presigned_post(
-  content_type: "contentType",
-  key: "key"
-)
+client.media.create_presigned_post(content_type: "contentType")
 ```
 </dd>
 </dl>
@@ -2902,7 +2899,7 @@ client.media.create_presigned_post(
 <dl>
 <dd>
 
-**key:** `String` — Object name, e.g. the file name. Stored under your workspace with accents dropped and characters outside A-Z, a-z, 0-9, `_`, `.`, `-` replaced by `-`; use the `key` the response returns.
+**key:** `String` — Optional file name. Only its extension is used, when `contentType` doesn't settle one: the server names the stored object itself. Use the `key` the response returns.
     
 </dd>
 </dl>

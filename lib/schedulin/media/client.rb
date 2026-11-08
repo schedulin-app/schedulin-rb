@@ -453,8 +453,9 @@ module Schedulin
       end
 
       # Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type`
-      # header matching `contentType`, then reference the returned `key` when creating a post. Pass `size` (bytes): the
-      # URL then only accepts an upload of exactly that size, and sizes over the upload limit are rejected up front.
+      # header matching `contentType`, then reference the returned `key` when creating a post. The server picks the
+      # `key` (a unique id under your workspace), so always use the one this returns. Pass `size` (bytes): the URL then
+      # only accepts an upload of exactly that size, and sizes over the upload limit are rejected up front.
       #
       # @param request_options [Hash]
       # @param params [Schedulin::Media::Types::CreatePresignedPost]
@@ -465,10 +466,7 @@ module Schedulin
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @example
-      #   client.media.create_presigned_post(
-      #     content_type: "contentType",
-      #     key: "key"
-      #   )
+      #   client.media.create_presigned_post(content_type: "contentType")
       #
       # @return [Schedulin::Types::PresignedPost]
       def create_presigned_post(request_options: {}, **params)

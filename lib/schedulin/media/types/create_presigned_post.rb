@@ -6,7 +6,7 @@ module Schedulin
       class CreatePresignedPost < Internal::Types::Model
         field :content_type, -> { String }, optional: false, nullable: false, api_name: "contentType"
 
-        field :key, -> { String }, optional: false, nullable: false
+        field :key, -> { String }, optional: true, nullable: false
 
         field :size, -> { Integer }, optional: true, nullable: false
 
