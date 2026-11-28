@@ -69,7 +69,11 @@ module Schedulin
 
       # Create a new post with media, tags, and scheduling options. Media items may reference a stored library URL or
       # any publicly reachable image/video URL — external URLs are downloaded into the media library automatically, so
-      # clients that cannot issue a raw presigned PUT can attach media in one call.
+      # clients that cannot issue a raw presigned PUT can attach media in one call. Video covers: each video's
+      # `media[].thumbnail_url` (an image) and/or `media[].thumbnail_timestamp_ms` (a frame); the post-level `thumbnail`
+      # is the first video's cover image when it has none. Covers in `platformConfiguration.media[]` are rejected (400).
+      # Instagram takes either (cover image on Reels, frame on Reels and carousel videos), YouTube only an image, TikTok
+      # only a frame — an unsupported cover publishes with a warning on the post.
       #
       # @param request_options [Hash]
       # @param params [Schedulin::Types::PostCreate]
@@ -197,8 +201,9 @@ module Schedulin
       # with the same items create accepts — part media may also be a library `{ id }`, so the `parts` array from `GET
       # /v0/posts/{id}` round-trips — and an empty array removes the thread. On X, parts[0] is the opening tweet:
       # sending `parts` without `caption` sets the caption to parts[0], and changing `caption` or `media` without
-      # `parts` updates parts[0] when it matched the old value. Posts that are already publishing, published, or failed
-      # can't be edited (409).
+      # `parts` updates parts[0] when it matched the old value. `thumbnail` sets the video's custom cover image (null
+      # removes it); `media[].thumbnail_url` / `media[].thumbnail_timestamp_ms` set a per-video cover image or frame,
+      # and are kept when left out. Posts that are already publishing, published, or failed can't be edited (409).
       #
       # @param request_options [Hash]
       # @param params [Schedulin::Posts::Types::UpdatePostsRequest]

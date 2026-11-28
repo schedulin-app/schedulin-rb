@@ -26,6 +26,10 @@ module Schedulin
 
         field :tags, -> { Internal::Types::Array[Schedulin::Posts::Types::UpdatePostsRequestPartsItemMediaItemTagsItem] }, optional: true, nullable: false
 
+        field :thumbnail_url, -> { String }, optional: true, nullable: false
+
+        field :thumbnail_timestamp_ms, -> { Integer }, optional: true, nullable: false
+
         field :skip_processing, -> { Internal::Types::Boolean }, optional: true, nullable: false
 
         field :bucket, -> { String }, optional: true, nullable: false

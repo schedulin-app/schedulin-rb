@@ -14,6 +14,8 @@ module Schedulin
 
         field :media, -> { Internal::Types::Array[Schedulin::Posts::Types::UpdatePostsRequestMediaItem] }, optional: true, nullable: false
 
+        field :thumbnail, -> { Schedulin::Posts::Types::UpdatePostsRequestThumbnail }, optional: true, nullable: false
+
         field :platform_configuration, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false, api_name: "platformConfiguration"
 
         field :status, -> { Schedulin::Posts::Types::UpdatePostsRequestStatus }, optional: true, nullable: false

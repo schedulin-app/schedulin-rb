@@ -6,10 +6,6 @@ module Schedulin
       class CreatePostGroupsResponsePostsItemMediaItem < Internal::Types::Model
         field :url, -> { String }, optional: false, nullable: false
 
-        field :thumbnail_url, -> { String }, optional: true, nullable: false
-
-        field :thumbnail_timestamp_ms, -> { Integer }, optional: true, nullable: false
-
         field :tags, -> { Internal::Types::Array[Schedulin::PostGroups::Types::CreatePostGroupsResponsePostsItemMediaItemTagsItem] }, optional: true, nullable: false
 
         field :alt, -> { String }, optional: true, nullable: false

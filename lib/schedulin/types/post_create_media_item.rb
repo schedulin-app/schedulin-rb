@@ -5,10 +5,6 @@ module Schedulin
     class PostCreateMediaItem < Internal::Types::Model
       field :url, -> { String }, optional: false, nullable: false
 
-      field :thumbnail_url, -> { String }, optional: true, nullable: false
-
-      field :thumbnail_timestamp_ms, -> { Integer }, optional: true, nullable: false
-
       field :tags, -> { Internal::Types::Array[Schedulin::Types::PostCreateMediaItemTagsItem] }, optional: true, nullable: false
 
       field :alt, -> { String }, optional: true, nullable: false
@@ -26,6 +22,10 @@ module Schedulin
       field :size, -> { Integer }, optional: true, nullable: false
 
       field :duration, -> { Integer }, optional: true, nullable: false
+
+      field :thumbnail_url, -> { String }, optional: true, nullable: false
+
+      field :thumbnail_timestamp_ms, -> { Integer }, optional: true, nullable: false
 
       field :caption, -> { String }, optional: true, nullable: false
     end
